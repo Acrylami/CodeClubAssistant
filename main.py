@@ -1,9 +1,11 @@
-import speech_recognition as sr
-import pyttsx3 as tts
-import pywhatkit as pwk
-import datetime
-import wikipedia
+import speech_recognition as sr  # module to mic input
+import pyttsx3 as tts  # text-to-speech
+import pywhatkit as pwk  # finds songs through YouTube
+import datetime  # retrieves dates and times
+import wikipedia  # opens Wikipedia pages
+from playsound import playsound  # better audio output
 
+# INITS
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
@@ -14,15 +16,15 @@ def say(string):
     engine.runAndWait()
 def take_command():
     try:
-        if not sr.Microphone():
-            print("Cannot access microphone. Try installing pyaudio!")
+        if not sr.Microphone:
+            print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
             print("I hear you when you're sleeping")
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if "alexa" in command:
-                command = command.replace("alexa", "")
+            if "athena" in command:
+                command = command.replace("athena", "")
                 return command
     except:
         pass
