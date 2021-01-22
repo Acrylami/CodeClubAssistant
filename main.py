@@ -18,7 +18,7 @@ def say(string):
 def take_command():
     try:
         with sr.Microphone() as source:
-            print("listening...")
+            print("I hear you when you're sleeping")
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
