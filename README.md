@@ -8,3 +8,10 @@ Pull requests are welcome. For major changes, please first discuss in the Discor
 (under brainstorming / idea-approval)
 
 Please make sure to update tests as appropriate.
+
+## Installation
+First, you need to install the requirements:
+```pip install -r requirements.txt```
+Then, you need to install PyAudio (note this will be changed):
+```pip install pipwin
+pipwin install pyaudio```
