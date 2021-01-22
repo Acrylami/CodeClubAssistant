@@ -4,7 +4,6 @@ import pywhatkit as pwk  # finds songs through YouTube
 import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 from playsound import playsound  # better audio output
-#meaningless change
 
 # INITS
 listener = sr.Recognizer()
