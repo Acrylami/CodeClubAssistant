@@ -9,14 +9,13 @@ engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
 
-
 def say(string):
     engine.say(string)
     engine.runAndWait()
-
-
 def take_command():
     try:
+        if not sr.Microphone():
+            print("Cannot access microphone. Try installing pyaudio!")
         with sr.Microphone() as source:
             print("I hear you when you're sleeping")
             voice = listener.listen(source)
@@ -29,9 +28,10 @@ def take_command():
         pass
 
 
-def run_alexa():
+def run_assistant():
     command = take_command()
     if command is not None:
+        print("DEBUG: " + command)
         if "play" in command:
             song = command.replace("play", "")
             print("playing" + song)
@@ -55,4 +55,4 @@ def run_alexa():
 
 
 while True:
-    run_alexa()
+    run_assistant()
