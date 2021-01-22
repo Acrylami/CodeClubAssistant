@@ -29,6 +29,8 @@ def take_command():
             if "athena" in command:
                 command = command.replace("athena", "")
                 return command
+    except:
+        pass
 
 
 def run_assistant():
