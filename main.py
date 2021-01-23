@@ -40,7 +40,7 @@ def take_command():
             command = command.lower()
             for x in list_1:
                 #Debug line for testing what it hears vs the wake words
-                #print(x + " : " + command)
+                print(x + " : " + command)
                 if command in x or x in command:
                     print("woken...")
                     command = command.replace(x, "")
