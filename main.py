@@ -1,9 +1,11 @@
+
 import speech_recognition as sr  # module to mic input
 import pyttsx3 as tts  # text-to-speech
 import pywhatkit as pwk  # finds songs through YouTube
 import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
-from playsound import playsound  # better audio output
+import webbrowser as wb
+import pyglet  # better audio output
 
 # INITS
 listener = sr.Recognizer()
@@ -11,19 +13,29 @@ engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
 
+
+def play_sound(filePath):
+    sound = pyglet.resource.media(filePath)
+    sound.play()
+    pyglet.app.run()
+
+
 def say(string):
     engine.say(string)
     engine.runAndWait()
+
+
 def take_command():
     try:
         if not sr.Microphone:
             print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
-            print("I hear you when you're sleeping")
+            print("listening...")
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
             if "athena" in command:
+                print("woken...")
                 command = command.replace("athena", "")
                 return command
     except:
@@ -33,7 +45,6 @@ def take_command():
 def run_assistant():
     command = take_command()
     if command is not None:
-        print("DEBUG: " + command)
         if "play" in command:
             song = command.replace("play", "")
             print("playing" + song)
@@ -54,6 +65,13 @@ def run_assistant():
 
         elif "repeat" in command:
             say(command.replace("repeat", ""))
+
+        elif "bitesize" in command:
+            search = command.replace("bitesize", "")
+            search = search.replace(" ", "+")
+            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+            say(("searching bbc bite size for %s" % search).replace("+", ""))
+            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
 
 
 while True:
