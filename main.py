@@ -34,10 +34,13 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if "athena" in command:
-                print("woken...")
+            if "athena" or "athina" in command:
+                print("recognized")
                 command = command.replace("athena", "")
+                command = command.replace("athina", "")
                 return command
+            else:
+                command = ""
     except:
         pass
 
@@ -66,9 +69,10 @@ def run_assistant():
         elif "repeat" in command:
             say(command.replace("repeat", ""))
 
-        elif "bitesize" in command:
+        elif "bitesize" or "bite size"in command:
             search = command.replace("bitesize", "")
             search = search.replace(" ", "+")
+            search = search.replace("++", "")
             print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
             say(("searching bbc bite size for %s" % search).replace("+", ""))
             wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
