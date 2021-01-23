@@ -1,19 +1,31 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import speech_recognition as sr
 import pyttsx3 as tts
 import pywhatkit as pwk
 import datetime
 import wikipedia
+=======
+import speech_recognition as sr # grabs Mic - change to something better
+import pyttsx3 as tts # tts
+import pywhatkit as pwk # allows you to play songs through
+import datetime # gets dates and times
+import wikipedia # opens wikipedia links
+>>>>>>> Stashed changes
 
+#print("Running") debug because i could not get it to work
+
+#Inits
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
 
-def say(string):
+def say(string): # simple say because people lazy to write 2 lines
+
     engine.say(string)
     engine.runAndWait()
-def take_command():
+def take_command(): # taking command
     try:
         if not sr.Microphone():
             print("Cannot access microphone. Try installing pyaudio!")
@@ -22,8 +34,8 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if "alexa" in command:
-                command = command.replace("alexa", "")
+            if "athena" in command:
+                command = command.replace("athena", "")
                 return command
     except:
         pass
