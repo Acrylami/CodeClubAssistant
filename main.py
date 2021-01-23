@@ -3,13 +3,20 @@ import pyttsx3 as tts  # text-to-speech
 import pywhatkit as pwk  # finds songs through YouTube
 import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
-from playsound import playsound  # better audio output
+import webbrowser as wb
+import pyglet  # better audio output
 
 # INITS
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
+
+
+def play_sound(filePath):
+    sound = pyglet.resource.media(filePath)
+    sound.play()
+    pyglet.app.run()
 
 
 def say(string):
@@ -27,6 +34,7 @@ def take_command():
             command = listener.recognize_google(voice)
             command = command.lower()
             if "athena" in command:
+                print("woken...")
                 command = command.replace("athena", "")
                 return command
     except:
@@ -56,6 +64,13 @@ def run_assistant():
 
         elif "repeat" in command:
             say(command.replace("repeat", ""))
+
+        elif "bitesize" in command:
+            search = command.replace("bitesize", "")
+            search = search.replace(" ", "+")
+            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+            say(("searching bbc bite size for %s" % search).replace("+", ""))
+            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
 
 
 while True:
