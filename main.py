@@ -39,7 +39,7 @@ def take_command():
             command = listener.recognize_google(voice)
             command = command.lower()
             for x in list_1:
-                if command in x:
+                if command in x or x in command:
                     print("woken...")
                     command = command.replace(x, "")
                     return command
@@ -71,7 +71,7 @@ def run_assistant():
         elif "repeat" in command:
             say(command.replace("repeat", ""))
 
-        elif "bitesize" or "bite size"in command:
+        elif "bitesize" in command or "bite size" in command:
             search = command.replace("bitesize", "")
             search = search.replace(" ", "+")
             search = search.replace("++", "")
