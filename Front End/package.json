@@ -1,0 +1,14 @@
+{
+  "name": "attempt-1",
+  "version": "1.0.0",
+  "description": "Code Club App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Code Club",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^11.2.1"
+  }
+}
