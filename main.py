@@ -1,13 +1,23 @@
-import speech_recognition as sr
-import pyttsx3 as tts
-import pywhatkit as pwk
-import datetime
-import wikipedia
 
+import speech_recognition as sr  # module to mic input
+import pyttsx3 as tts  # text-to-speech
+import pywhatkit as pwk  # finds songs through YouTube
+import datetime  # retrieves dates and times
+import wikipedia  # opens Wikipedia pages
+import webbrowser as wb
+import pyglet  # better audio output
+
+# INITS
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
+
+
+def play_sound(filePath):
+    sound = pyglet.resource.media(filePath)
+    sound.play()
+    pyglet.app.run()
 
 
 def say(string):
@@ -17,19 +27,25 @@ def say(string):
 
 def take_command():
     try:
+        if not sr.Microphone:
+            print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
-            print("I hear you when you're sleeping")
+            print("listening...")
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if "alexa" in command:
-                command = command.replace("alexa", "")
+            if "athena" or "athina" in command:
+                print("recognized")
+                command = command.replace("athena", "")
+                command = command.replace("athina", "")
                 return command
+            else:
+                command = ""
     except:
         pass
 
 
-def run_alexa():
+def run_assistant():
     command = take_command()
     if command is not None:
         if "play" in command:
@@ -53,6 +69,14 @@ def run_alexa():
         elif "repeat" in command:
             say(command.replace("repeat", ""))
 
+        elif "bitesize" or "bite size"in command:
+            search = command.replace("bitesize", "")
+            search = search.replace(" ", "+")
+            search = search.replace("++", "")
+            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+            say(("searching bbc bite size for %s" % search).replace("+", ""))
+            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
+
 
 while True:
-    run_alexa()
+    run_assistant()
