@@ -1,5 +1,0 @@
-speechrecognition
-pyttsx3
-pywhatkit
-datetime
-wikipedia
