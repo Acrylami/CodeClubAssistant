@@ -1,4 +1,4 @@
-
+# Fixed bugs
 import speech_recognition as sr  # module to mic input
 import pyttsx3 as tts  # text-to-speech
 import pywhatkit as pwk  # finds songs through YouTube
@@ -29,7 +29,11 @@ def say(string):
 
 
 def take_command():
+    list_1 = []
     try:
+        with open("config.txt") as f:
+            for line in f:
+                list_1.append(line.strip('\n\r'))
         if not sr.Microphone:
             print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
@@ -37,10 +41,15 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if getTextFile("config.txt") in command:
-                print("woken...")
-                command = command.replace(getTextFile("config.txt"), "")
-                return command
+
+            for x in list_1:
+                #Debug line for testing what it hears vs the wake words
+                #print(x + " : " + command)
+                if command in x or x in command:
+                    print("woken...")
+                    command = command.replace(x, "")
+                    return command
+
     except:
         pass
 
@@ -96,6 +105,7 @@ def run_assistant():
         elif "repeat" in command:
             say(command.replace("repeat", ""))
 
+
         elif "what does" in command:
             thing = command.replace("what does", "")
             thing = thing.replace("tofind", "")
@@ -109,9 +119,12 @@ def run_assistant():
                 pass
         elif "repeat" in command:
             say(command.replace("repeat", ""))
-        elif "bitesize" in command:
+
+        elif "bitesize" in command or "bite size" in command:
+
             search = command.replace("bitesize", "")
             search = search.replace(" ", "+")
+            search = search.replace("++", "")
             print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
             say(("searching bbc bite size for %s" % search).replace("+", ""))
             wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
