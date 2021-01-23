@@ -19,6 +19,9 @@ def play_sound(filePath):
     sound.play()
     pyglet.app.run()
 
+def getTextFile(file):
+    f = open(file, "r")
+    return f.read()
 
 def say(string):
     engine.say(string)
@@ -34,9 +37,9 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if "athena" in command:
+            if getTextFile("config.txt") in command:
                 print("woken...")
-                command = command.replace("athena", "")
+                command = command.replace(getTextFile("config.txt"), "")
                 return command
     except:
         pass
