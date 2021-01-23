@@ -1,4 +1,4 @@
-# Fixed bugs
+
 import speech_recognition as sr  # module to mic input
 import pyttsx3 as tts  # text-to-speech
 import pywhatkit as pwk  # finds songs through YouTube
@@ -19,9 +19,6 @@ def play_sound(filePath):
     sound.play()
     pyglet.app.run()
 
-def getTextFile(file):
-    f = open(file, "r")
-    return f.read()
 
 def say(string):
     engine.say(string)
@@ -29,11 +26,12 @@ def say(string):
 
 
 def take_command():
-    list_1 = []
     try:
-        with open("config.txt") as f:
-            for line in f:
-                list_1.append(line.strip('\n\r'))
+    listOfWakeWords = []
+    try:
+        with open("config.txt") as config:
+            for line in config:
+                listOfWakeWords.append(line.replace("\n", ""))
         if not sr.Microphone:
             print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
@@ -41,15 +39,11 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-
-            for x in list_1:
-                #Debug line for testing what it hears vs the wake words
-                #print(x + " : " + command)
-                if command in x or x in command:
+            for word in listOfWakeWords:
+                if word in command:
                     print("woken...")
-                    command = command.replace(x, "")
+                    command = command.replace(word, "")
                     return command
-
     except:
         pass
 
@@ -57,7 +51,6 @@ def take_command():
 def run_assistant():
     command = take_command()
     if command is not None:
-        print("Debug: " + command)
         if "play" in command:
             song = command.replace("play", "")
             print("playing" + song)
@@ -73,63 +66,14 @@ def run_assistant():
             thing = command.replace("define", "")
             thing = thing.replace("tofind", "")
             thing = thing.replace(" ", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+            print(wikipedia.summary(thing, 1))
+            say(wikipedia.summary(thing, 1))
 
-
-        elif "define" in command:
-            thing = command.replace("define", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace(" ", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-
-
-        elif "search wikipedia for" in command:
-            thing = command.replace("search wikipedia for", "")
-            thing = thing.replace("tofind", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
         elif "repeat" in command:
             say(command.replace("repeat", ""))
 
-
-        elif "what does" in command:
-            thing = command.replace("what does", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace("mean", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-                pass
-        elif "repeat" in command:
-            say(command.replace("repeat", ""))
-
-        elif "bitesize" in command or "bite size" in command:
-
+        elif "bitesize" in command:
             search = command.replace("bitesize", "")
-            search = search.replace(" ", "+")
-            search = search.replace("++", "")
-            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
-            say(("searching bbc bite size for %s" % search).replace("+", ""))
-            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
-        elif "research" in command:
-            search = command.replace("research", "")
             search = search.replace(" ", "+")
             print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
             say(("searching bbc bite size for %s" % search).replace("+", ""))
