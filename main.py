@@ -19,6 +19,9 @@ def play_sound(filePath):
     sound.play()
     pyglet.app.run()
 
+def getTextFile(file):
+    f = open(file, "r")
+    return f.read()
 
 def say(string):
     engine.say(string)
@@ -38,6 +41,7 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
+
             for x in list_1:
                 #Debug line for testing what it hears vs the wake words
                 #print(x + " : " + command)
@@ -45,6 +49,7 @@ def take_command():
                     print("woken...")
                     command = command.replace(x, "")
                     return command
+
     except:
         pass
 
@@ -52,6 +57,7 @@ def take_command():
 def run_assistant():
     command = take_command()
     if command is not None:
+        print("Debug: " + command)
         if "play" in command:
             song = command.replace("play", "")
             print("playing" + song)
@@ -67,16 +73,64 @@ def run_assistant():
             thing = command.replace("define", "")
             thing = thing.replace("tofind", "")
             thing = thing.replace(" ", "")
-            print(wikipedia.summary(thing, 1))
-            say(wikipedia.summary(thing, 1))
+            print(thing)
+            try:
+                print(wikipedia.summary(thing, 1))
+                say(wikipedia.summary(thing, 1))
+            except:
+                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
 
+
+        elif "define" in command:
+            thing = command.replace("define", "")
+            thing = thing.replace("tofind", "")
+            thing = thing.replace(" ", "")
+            print(thing)
+            try:
+                print(wikipedia.summary(thing, 1))
+                say(wikipedia.summary(thing, 1))
+            except:
+                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+
+
+        elif "search wikipedia for" in command:
+            thing = command.replace("search wikipedia for", "")
+            thing = thing.replace("tofind", "")
+            print(thing)
+            try:
+                print(wikipedia.summary(thing, 1))
+                say(wikipedia.summary(thing, 1))
+            except:
+                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+        elif "repeat" in command:
+            say(command.replace("repeat", ""))
+
+
+        elif "what does" in command:
+            thing = command.replace("what does", "")
+            thing = thing.replace("tofind", "")
+            thing = thing.replace("mean", "")
+            print(thing)
+            try:
+                print(wikipedia.summary(thing, 1))
+                say(wikipedia.summary(thing, 1))
+            except:
+                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+                pass
         elif "repeat" in command:
             say(command.replace("repeat", ""))
 
         elif "bitesize" in command or "bite size" in command:
+
             search = command.replace("bitesize", "")
             search = search.replace(" ", "+")
             search = search.replace("++", "")
+            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+            say(("searching bbc bite size for %s" % search).replace("+", ""))
+            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
+        elif "research" in command:
+            search = command.replace("research", "")
+            search = search.replace(" ", "+")
             print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
             say(("searching bbc bite size for %s" % search).replace("+", ""))
             wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
