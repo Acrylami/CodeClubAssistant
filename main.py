@@ -26,7 +26,11 @@ def say(string):
 
 
 def take_command():
+    list_1 = []
     try:
+        with open("config.txt") as f:
+            for line in f:
+                list_1.append(line)
         if not sr.Microphone:
             print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
@@ -34,13 +38,11 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if "athena" or "athina" in command:
-                print("recognized")
-                command = command.replace("athena", "")
-                command = command.replace("athina", "")
-                return command
-            else:
-                command = ""
+            for x in list_1:
+                if command in x:
+                    print("woken...")
+                    command = command.replace(x, "")
+                    return command
     except:
         pass
 
