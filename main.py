@@ -30,7 +30,7 @@ def take_command():
     try:
         with open("config.txt") as f:
             for line in f:
-                list_1.append(line)
+                list_1.append(line.strip('\n\r'))
         if not sr.Microphone:
             print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
@@ -39,6 +39,8 @@ def take_command():
             command = listener.recognize_google(voice)
             command = command.lower()
             for x in list_1:
+                #Debug line for testing what it hears vs the wake words
+                #print(x + " : " + command)
                 if command in x or x in command:
                     print("woken...")
                     command = command.replace(x, "")
