@@ -27,6 +27,11 @@ def say(string):
 
 def take_command():
     try:
+    listOfWakeWords = []
+    try:
+        with open("config.txt") as config:
+            for line in config:
+                listOfWakeWords.append(line.replace("\n", ""))
         if not sr.Microphone:
             print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
@@ -34,10 +39,11 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if "athena" in command:
-                print("woken...")
-                command = command.replace("athena", "")
-                return command
+            for word in listOfWakeWords:
+                if word in command:
+                    print("woken...")
+                    command = command.replace(word, "")
+                    return command
     except:
         pass
 
