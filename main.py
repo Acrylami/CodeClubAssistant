@@ -8,11 +8,16 @@ import webbrowser as wb
 import pyglet  # better audio output
 
 # INITS
-listener = sr.Recognizer()
-engine = tts.init()
-voices = engine.getProperty("voices")
-engine.setProperty("voice", voices[1].id)
 
+
+list_1 = []
+try:
+    with open("config.txt") as f:
+        for line in f:
+            list_1.append(line.strip('\n\r'))
+except:
+    pass
+    print("Failed to initialize\ninsure that 'config.txt' is installed in the same folder as this script")
 
 def play_sound(filePath):
     sound = pyglet.resource.media(filePath)
@@ -26,23 +31,18 @@ def getTextFile(file):
 def say(string):
     engine.say(string)
     engine.runAndWait()
+    print("DK why not working. Get main code working first")
 
 
 class Athena:
-    def __init__(self):
-        self.list_1 = []
-        try:
-            with open("config.txt") as f:
-                for line in f:
-                    list_1.append(line.strip('\n\r'))
-        except:
-            pass
-            print("Failed to initialize\ninsure that 'config.txt' is installed in the same folder as this script")
-
     def sampleAudio():
         if not sr.Microphone:
             print("Cannot access microphone. See requirements.txt to install PyAudio.")
         with sr.Microphone() as source:
+            listener = sr.Recognizer()
+            engine = tts.init()
+            voices = engine.getProperty("voices")
+            engine.setProperty("voice", voices[1].id)
             print("listening...")
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
@@ -51,7 +51,7 @@ class Athena:
             for x in list_1:
                 #Debug line for testing what it hears vs the wake words
                 #print(x + " : " + command)
-                if  command in x or x in command:
+                if x in command:
                     print("woken...")
                     command = command.replace(x, "")
                     return command
@@ -59,19 +59,19 @@ class Athena:
     def runAthena():
         command = Athena.sampleAudio()
         if "play" in command:
-            play(command)
+            Athena.play(command)
         elif "time" in command:
-            time(command)
+            Athena.time(command)
         elif "define" in command:
-            define(command)
+            Athena.define(command)
         elif "search wikipedia for" in command:
-            searchWikipedia(command)
+            Athena.searchWikipedia(command)
         elif "what does" in command:
-            whatdoes(command)
+            Athena.whatdoes(command)
         elif "bitesize" in command or "bite size" in command:
-            bitesize(command)
+            Athena.bitesize(command)
         elif "research" in command:
-            reaserch(command)
+            Athena.reaserch(command)
             
     #FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(input): #DONE
@@ -134,7 +134,6 @@ class Athena:
         print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
-
 
 while True:
     Athena.runAthena()
