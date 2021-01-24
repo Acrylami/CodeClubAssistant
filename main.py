@@ -42,21 +42,24 @@ def say(string):
 
 
 def runAthena(self):
-    command = Athena.sampleAudio(self)
-    if "play" in command:
-        Athena.play(self, command)
-    elif "time" in command:
-        Athena.time(self, command)
-    elif "define" in command:
-        Athena.define(self, command)
-    elif "search wikipedia for" in command:
-        Athena.searchWikipedia(self, command)
-    elif "what does" in command:
-        Athena.whatdoes(self, command)
-    elif "bitesize" in command or "bite size" in command:
-        Athena.bitesize(self, command)
-    elif "research" in command:
-        Athena.reaserch(self, command)
+    try:
+        command = Athena.sampleAudio(self)
+        if "play" in command:
+            Athena.play(self, command)
+        elif "time" in command:
+            Athena.time(self, command)
+        elif "define" in command:
+            Athena.define(self, command)
+        elif "search wikipedia for" in command:
+            Athena.searchWikipedia(self, command)
+        elif "what does" in command:
+            Athena.whatdoes(self, command)
+        elif "bitesize" in command or "bite size" in command:
+            Athena.bitesize(self, command)
+        elif "research" in command:
+            Athena.reaserch(self, command)
+    except:
+        print("Error with the play thing\nTypeError: argument of type 'NoneType' is not iterable\nLine 46")
 
 
 class Athena:
