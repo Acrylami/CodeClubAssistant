@@ -14,6 +14,31 @@ engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
 
+#Calculator FUNCS:
+
+#All in radius
+pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+
+#Basic
+add = lambda a, b : a + b
+minus = lambda a, b : a - b
+times = lambda a, b : a * b
+divide = lambda a, b : a / b
+
+#More less Basic
+power = lambda a, b : a ** b
+root = lambda a, b : a ** (b ** -1)
+
+#BrainBogglers
+cArea = lambda a :  pi * (a ** 2)                               # circle Area
+cCum = lambda a : (a * 2) * pi                                  # circle circumferance
+ciArea = lambda a, b : ((pi * (a ** 2)) * 2) + ((a * 2) * pi)   # cilyndr area
+ciVol = lambda a, b : (pi * (a ** 2)) * b                       # cilyndr volume
+
+#GigaBogglers
+sArea = lambda a : 4 * pi * (a ** 2)
+sVol = lambda a : (4/3) * pi * (a ** 3)
+
 list_1 = []
 try:
     with open("config.txt") as f:
@@ -43,21 +68,21 @@ def say(string):
 
 def runAthena(self):
     try:
-        command = Athena.sampleAudio(self)
-        if "play" in command:
-            Athena.play(self, command)
-        elif "time" in command:
-            Athena.time(self, command)
-        elif "define" in command:
-            Athena.define(self, command)
-        elif "search wikipedia for" in command:
-            Athena.searchWikipedia(self, command)
-        elif "what does" in command:
-            Athena.whatdoes(self, command)
-        elif "bitesize" in command or "bite size" in command:
-            Athena.bitesize(self, command)
-        elif "research" in command:
-            Athena.reaserch(self, command)
+        text = Athena.sampleAudio(self)
+        if "play" in text:
+            Athena.play(self, text)
+        elif "time" in text:
+            Athena.time(self, text)
+        elif "define" in text:
+            Athena.define(self, text)
+        elif "search wikipedia for" in text:
+            Athena.searchWikipedia(self, text)
+        elif "what does" in text:
+            Athena.whatdoes(self, text)
+        elif "bitesize" in text or "bite size" in text:
+            Athena.bitesize(self, text)
+        elif "research" in text:
+            Athena.reaserch(self, text)
     except:
         print("Error with the play thing\nTypeError: argument of type 'NoneType' is not iterable\nLine 46")
 
@@ -71,10 +96,9 @@ class Athena:
             voice = listener.listen(source)
             try:
                 command = listener.recognize_google(voice)
-            except:
-                command = "There was an error with the google recog. Probs one off error just loop and try again"
-            finally:
                 command = command.lower()
+            except:
+                command = ""
 
             for x in list_1:
                 # Debug line for testing what it hears vs the wake words
