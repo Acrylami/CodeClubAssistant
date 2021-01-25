@@ -70,7 +70,7 @@ class Athena:
                 text = text.lower()
         except:
             text = ""
-        if "athena" in text or "athina" in text:
+        if "athena" in text or "athina" in text or "tatis" in text:
             print("woken...")
             text = text.replace("athena", "")
             text = text.replace("athina", "")
