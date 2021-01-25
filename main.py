@@ -6,9 +6,10 @@ import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
+from googletrans import Translator
 
 # INITS
-
+translate = Translator()
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
@@ -67,24 +68,22 @@ def say(string):
 
 
 def runAthena(self):
-    try:
-        text = Athena.sampleAudio(self)
-        if "play" in text:
-            Athena.play(self, text)
-        elif "time" in text:
-            Athena.time(self, text)
-        elif "define" in text:
-            Athena.define(self, text)
-        elif "search wikipedia for" in text:
-            Athena.searchWikipedia(self, text)
-        elif "what does" in text:
-            Athena.whatdoes(self, text)
-        elif "bitesize" in text or "bite size" in text:
-            Athena.bitesize(self, text)
-        elif "research" in text:
-            Athena.reaserch(self, text)
-    except:
-        print("Error with the play thing\nTypeError: argument of type 'NoneType' is not iterable\nLine 46")
+    text = Athena.sampleAudio(self)
+    if "play" in text:
+        Athena.play(self, text)
+    elif "time" in text:
+        Athena.time(self, text)
+    elif "define" in text:
+        Athena.define(self, text)
+    elif "search wikipedia for" in text:
+        Athena.searchWikipedia(self, text)
+    elif "what does" in text:
+        Athena.whatdoes(self, text)
+    elif "bitesize" in text or "bite size" in text:
+        Athena.bitesize(self, text)
+    elif "research" in text:
+        Athena.reaserch(self, text)
+    #print("Error with the play thing\nTypeError: argument of type 'NoneType' is not iterable\nLine 46")
 
 
 class Athena:
@@ -100,13 +99,11 @@ class Athena:
             except:
                 command = ""
 
-            for x in list_1:
-                # Debug line for testing what it hears vs the wake words
-                # print(x + " : " + command)
-                if x in command or command in x:
-                    print("woken...")
-                    command = command.replace(x, "")
-                    return command
+            if "athena" in command or "athina" in command:
+                print("woken...")
+                command = command.replace("athena", "")
+                command = command.replace("athina", "")
+                return command
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
