@@ -40,15 +40,6 @@ ciVol = lambda a, b : (pi * (a ** 2)) * b                       # cilyndr volume
 sArea = lambda a : 4 * pi * (a ** 2)
 sVol = lambda a : (4/3) * pi * (a ** 3)
 
-list_1 = []
-try:
-    with open("config.txt") as f:
-        for line in f:
-            list_1.append(line.strip('\n\r'))
-except:
-    pass
-    print("Failed to initialize\ninsure that 'config.txt' is installed in the same folder as this script")
-
 
 def play_sound(filePath):
     sound = pyglet.resource.media(filePath)
@@ -82,8 +73,6 @@ def runAthena(self):
         Athena.bitesize(self, text)
     elif "research" in text:
         Athena.reaserch(self, text)
-    #print("Error with the play thing\nTypeError: argument of type 'NoneType' is not iterable\nLine 46")
-
 
 class Athena:
     def sampleAudio(self):
@@ -92,12 +81,9 @@ class Athena:
         with sr.Microphone() as source:
             print("listening...")
             voice = listener.listen(source)
-            try:
-                command = listener.recognize_google(voice)
-                command = command.lower()
-            except:
-                command = ""
-
+            command = listener.recognize_google(voice)
+            command = command.lower()
+            
             if "athena" in command or "athina" in command:
                 print("woken...")
                 command = command.replace("athena", "")
