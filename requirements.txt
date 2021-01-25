@@ -4,3 +4,4 @@ pywhatkit
 datetime
 wikipedia
 pyglet
+googletrans

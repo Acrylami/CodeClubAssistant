@@ -6,12 +6,39 @@ import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
+from googletrans import Translator
 
 # INITS
+translate = Translator()
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
+
+#Calculator FUNCS:
+
+#All in radius
+pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+
+#Basic
+add = lambda a, b : a + b
+minus = lambda a, b : a - b
+times = lambda a, b : a * b
+divide = lambda a, b : a / b
+
+#More less Basic
+power = lambda a, b : a ** b
+root = lambda a, b : a ** (b ** -1)
+
+#BrainBogglers
+cArea = lambda a :  pi * (a ** 2)                               # circle Area
+cCum = lambda a : (a * 2) * pi                                  # circle circumferance
+ciArea = lambda a, b : ((pi * (a ** 2)) * 2) + ((a * 2) * pi)   # cilyndr area
+ciVol = lambda a, b : (pi * (a ** 2)) * b                       # cilyndr volume
+
+#GigaBogglers
+sArea = lambda a : 4 * pi * (a ** 2)
+sVol = lambda a : (4/3) * pi * (a ** 3)
 
 
 def play_sound(filePath):
@@ -19,122 +46,135 @@ def play_sound(filePath):
     sound.play()
     pyglet.app.run()
 
+
 def getTextFile(file):
     f = open(file, "r")
     return f.read()
+
 
 def say(string):
     engine.say(string)
     engine.runAndWait()
 
 
-def take_command():
-    list_1 = []
-    try:
-        with open("config.txt") as f:
-            for line in f:
-                list_1.append(line.strip('\n\r'))
-        if not sr.Microphone:
-            print("Cannot access microphone. See requirements.txt to install PyAudio.")
+    
+class Athena:
+    def runAthena(self):
+        try:
+            if not sr.Microphone:
+                print("Cannot access microphone. See requirements.txt to install PyAudio.")
+            with sr.Microphone() as source:
+                print("listening...")
+                voice = listener.listen(source)
+                text = listener.recognize_google(voice, language='en-UK')
+                text = text.lower()
+        except:
+            text = ""
+        if "athena" in text or "athina" in text:
+            print("woken...")
+            text = text.replace("athena", "")
+            text = text.replace("athina", "")
+        
+        if "play" in text:
+            Athena.play(self, text)
+        elif "time" in text:
+            Athena.time(self, text)
+        elif "define" in text:
+            Athena.define(self, text)
+        elif "search wikipedia for" in text:
+            Athena.searchWikipedia(self, text)
+        elif "what does" in text:
+            Athena.whatdoes(self, text)
+        elif "bitesize" in text or "bite size" in text:
+            Athena.bitesize(self, text)
+        elif "research" in text:
+            Athena.reaserch(self, text)
+        elif "translate" in text:
+            Athena.translate(self, text)
+
+    # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
+    def play(self, input):  # DONE
+        song = input.replace("play", "")
+        print("playing" + song)
+        say("playing" + song)
+        pwk.playonyt(song)
+
+    def time(self, input):  # DONE
+        time = datetime.datetime.now().strftime("%I:%M %p")
+        print(time)
+        say("the time is " + time)
+
+    def define(self, input):  # DONE
+        thing = input.replace("define", "")
+        thing = thing.replace("tofind", "")
+        thing = thing.replace(" ", "")
+        print(thing)
+        try:
+            print(wikipedia.summary(thing, 1))
+            say(wikipedia.summary(thing, 1))
+        except:
+            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+
+    def searchWikipedia(self, input):  # DONE
+        thing = input.replace("search wikipedia for", "")
+        thing = thing.replace("tofind", "")
+        print(thing)
+        try:
+            print(wikipedia.summary(thing, 1))
+            say(wikipedia.summary(thing, 1))
+        except:
+            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+
+    def whatdoes(self, input):  # DONE
+        thing = input.replace("what does", "")
+        thing = thing.replace("tofind", "")
+        thing = thing.replace("mean", "")
+        print(thing)
+        try:
+            print(wikipedia.summary(thing, 1))
+            say(wikipedia.summary(thing, 1))
+        except:
+            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+            pass
+
+    # elif "repeat" in command:
+    # say(command.replace("repeat", ""))
+
+    def bitesize(self, input):  # DONE
+
+        search = input.replace("bitesize", "")
+        search = search.replace(" ", "+")
+        search = search.replace("++", "")
+        print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+        say(("searching bbc bite size for %s" % search).replace("+", ""))
+        wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
+
+    def reaserch(self, input):
+        search = input.replace("research", "")
+        search = search.replace(" ", "+")
+        print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+        say(("searching bbc bite size for %s" % search).replace("+", ""))
+        wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
+    
+    def translate(self, input):
         with sr.Microphone() as source:
-            print("listening...")
             voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
-
-            for x in list_1:
-                #Debug line for testing what it hears vs the wake words
-                #print(x + " : " + command)
-                if command in x or x in command:
-                    print("woken...")
-                    command = command.replace(x, "")
-                    return command
-
-    except:
-        pass
-
-
-def run_assistant():
-    command = take_command()
-    if command is not None:
-        print("Debug: " + command)
-        if "play" in command:
-            song = command.replace("play", "")
-            print("playing" + song)
-            say("playing" + song)
-            pwk.playonyt(song)
-
-        elif "time" in command:
-            time = datetime.datetime.now().strftime("%I:%M %p")
-            print(time)
-            say("the time is " + time)
-
-        elif "define" in command:
-            thing = command.replace("define", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace(" ", "")
-            print(thing)
+            say("What language would you like to translate into?")
             try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
+                lang = listener.recognize_google(voice)
             except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-
-
-        elif "define" in command:
-            thing = command.replace("define", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace(" ", "")
-            print(thing)
+                lang = ""
+            say("What would you like to translate?")
             try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
+                eng = listener.recognize_google(voice)
             except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-
-
-        elif "search wikipedia for" in command:
-            thing = command.replace("search wikipedia for", "")
-            thing = thing.replace("tofind", "")
-            print(thing)
+                eng = ""
+            say("The translation has been printed")
             try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
+                print("The translation is: " + translate.translate(eng, dest=lang))
             except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-        elif "repeat" in command:
-            say(command.replace("repeat", ""))
-
-
-        elif "what does" in command:
-            thing = command.replace("what does", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace("mean", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-                pass
-        elif "repeat" in command:
-            say(command.replace("repeat", ""))
-
-        elif "bitesize" in command or "bite size" in command:
-
-            search = command.replace("bitesize", "")
-            search = search.replace(" ", "+")
-            search = search.replace("++", "")
-            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
-            say(("searching bbc bite size for %s" % search).replace("+", ""))
-            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
-        elif "research" in command:
-            search = command.replace("research", "")
-            search = search.replace(" ", "+")
-            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
-            say(("searching bbc bite size for %s" % search).replace("+", ""))
-            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
-
+                say("Sorry, the language you requested is not recognised.")
 
 while True:
-    run_assistant()
+    #runAthena(self=Athena())
+    Athena.runAthena(self = Athena())
