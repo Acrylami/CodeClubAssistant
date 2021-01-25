@@ -64,7 +64,6 @@ def getTextFile(file):
 def say(string):
     engine.say(string)
     engine.runAndWait()
-    print("DK why not working. Get main code working first")
 
 
 def runAthena(self):
