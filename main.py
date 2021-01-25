@@ -68,13 +68,13 @@ class Athena:
                 voice = listener.listen(source)
                 command = listener.recognize_google(voice, language='en-UK')
                 command = command.lower()
+                text = command
         except:
             text = ""
-        if "athena" in command or "athina" in command:
+        if "athena" in text or "athina" in text:
             print("woken...")
-            command = command.replace("athena", "")
-            command = command.replace("athina", "")
-            text = command
+            text = text.replace("athena", "")
+            text = text.replace("athina", "")
         
         if "play" in text:
             Athena.play(self, text)
