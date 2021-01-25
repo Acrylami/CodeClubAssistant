@@ -9,14 +9,11 @@ import pyglet  # better audio output
 from googletrans import Translator
 
 # INITS
-
 translate = Translator()
-
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
-
 
 #Calculator FUNCS:
 
@@ -44,15 +41,16 @@ sArea = lambda a : 4 * pi * (a ** 2)
 sVol = lambda a : (4/3) * pi * (a ** 3)
 
 
-
 def play_sound(filePath):
     sound = pyglet.resource.media(filePath)
     sound.play()
     pyglet.app.run()
 
+
 def getTextFile(file):
     f = open(file, "r")
     return f.read()
+
 
 def say(string):
     engine.say(string)
@@ -68,9 +66,8 @@ class Athena:
             with sr.Microphone() as source:
                 print("listening...")
                 voice = listener.listen(source)
-                command = listener.recognize_google(voice, language='en-UK')
-                command = command.lower()
-                text = command
+                text = listener.recognize_google(voice, language='en-UK')
+                text = text.lower()
         except:
             text = ""
         if "athena" in text or "athina" in text:
@@ -93,95 +90,71 @@ class Athena:
         elif "research" in text:
             Athena.reaserch(self, text)
 
+    # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
+    def play(self, input):  # DONE
+        song = input.replace("play", "")
+        print("playing" + song)
+        say("playing" + song)
+        pwk.playonyt(song)
 
-    except:
-        pass
+    def time(self, input):  # DONE
+        time = datetime.datetime.now().strftime("%I:%M %p")
+        print(time)
+        say("the time is " + time)
 
+    def define(self, input):  # DONE
+        thing = input.replace("define", "")
+        thing = thing.replace("tofind", "")
+        thing = thing.replace(" ", "")
+        print(thing)
+        try:
+            print(wikipedia.summary(thing, 1))
+            say(wikipedia.summary(thing, 1))
+        except:
+            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
 
-def run_assistant():
-    command = take_command()
-    if command is not None:
-        print("Debug: " + command)
-        if "play" in command:
-            song = command.replace("play", "")
-            print("playing" + song)
-            say("playing" + song)
-            pwk.playonyt(song)
+    def searchWikipedia(self, input):  # DONE
+        thing = input.replace("search wikipedia for", "")
+        thing = thing.replace("tofind", "")
+        print(thing)
+        try:
+            print(wikipedia.summary(thing, 1))
+            say(wikipedia.summary(thing, 1))
+        except:
+            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
 
-        elif "time" in command:
-            time = datetime.datetime.now().strftime("%I:%M %p")
-            print(time)
-            say("the time is " + time)
+    def whatdoes(self, input):  # DONE
+        thing = input.replace("what does", "")
+        thing = thing.replace("tofind", "")
+        thing = thing.replace("mean", "")
+        print(thing)
+        try:
+            print(wikipedia.summary(thing, 1))
+            say(wikipedia.summary(thing, 1))
+        except:
+            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+            pass
 
-        elif "define" in command:
-            thing = command.replace("define", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace(" ", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+    # elif "repeat" in command:
+    # say(command.replace("repeat", ""))
 
+    def bitesize(self, input):  # DONE
 
-        elif "define" in command:
-            thing = command.replace("define", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace(" ", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+        search = input.replace("bitesize", "")
+        search = search.replace(" ", "+")
+        search = search.replace("++", "")
+        print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+        say(("searching bbc bite size for %s" % search).replace("+", ""))
+        wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
 
-
-        elif "search wikipedia for" in command:
-            thing = command.replace("search wikipedia for", "")
-            thing = thing.replace("tofind", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-        elif "repeat" in command:
-            say(command.replace("repeat", ""))
-
-
-        elif "what does" in command:
-            thing = command.replace("what does", "")
-            thing = thing.replace("tofind", "")
-            thing = thing.replace("mean", "")
-            print(thing)
-            try:
-                print(wikipedia.summary(thing, 1))
-                say(wikipedia.summary(thing, 1))
-            except:
-                say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
-                pass
-        elif "repeat" in command:
-            say(command.replace("repeat", ""))
-
-        elif "bitesize" in command or "bite size" in command:
-
-            search = command.replace("bitesize", "")
-            search = search.replace(" ", "+")
-            search = search.replace("++", "")
-            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
-            say(("searching bbc bite size for %s" % search).replace("+", ""))
-            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
-        elif "research" in command:
-            search = command.replace("research", "")
-            search = search.replace(" ", "+")
-            print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
-            say(("searching bbc bite size for %s" % search).replace("+", ""))
-            wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
+    def reaserch(self, input):
+        search = input.replace("research", "")
+        search = search.replace(" ", "+")
+        print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
+        say(("searching bbc bite size for %s" % search).replace("+", ""))
+        wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
 
 
 while True:
     #runAthena(self=Athena())
     Athena.runAthena(self = Athena())
-
-
