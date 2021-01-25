@@ -57,23 +57,7 @@ def say(string):
     engine.runAndWait()
 
 
-def runAthena(self):
-    text = Athena.sampleAudio(self)
-    if "play" in text:
-        Athena.play(self, text)
-    elif "time" in text:
-        Athena.time(self, text)
-    elif "define" in text:
-        Athena.define(self, text)
-    elif "search wikipedia for" in text:
-        Athena.searchWikipedia(self, text)
-    elif "what does" in text:
-        Athena.whatdoes(self, text)
-    elif "bitesize" in text or "bite size" in text:
-        Athena.bitesize(self, text)
-    elif "research" in text:
-        Athena.reaserch(self, text)
-
+    
 class Athena:
     def sampleAudio(self):
         if not sr.Microphone:
@@ -88,7 +72,22 @@ class Athena:
                 print("woken...")
                 command = command.replace("athena", "")
                 command = command.replace("athina", "")
-                return command
+                text = command
+            
+            if "play" in text:
+                Athena.play(self, text)
+            elif "time" in text:
+                Athena.time(self, text)
+            elif "define" in text:
+                Athena.define(self, text)
+            elif "search wikipedia for" in text:
+                Athena.searchWikipedia(self, text)
+            elif "what does" in text:
+                Athena.whatdoes(self, text)
+            elif "bitesize" in text or "bite size" in text:
+                Athena.bitesize(self, text)
+            elif "research" in text:
+                Athena.reaserch(self, text)
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
@@ -156,4 +155,5 @@ class Athena:
 
 
 while True:
-    runAthena(self=Athena())
+    #runAthena(self=Athena())
+    Athena.sampleAudio(self = Athena())
