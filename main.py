@@ -47,16 +47,10 @@ def play_sound(filePath):
     sound.play()
     pyglet.app.run()
 
-def getTextFile(file):
-    f = open(file, "r")
-    return f.read()
 
 def say(string):
     engine.say(string)
     engine.runAndWait()
-
-
-
 
 class Athena:
     def runAthena(self):
@@ -92,7 +86,7 @@ class Athena:
         elif "research" in text:
             Athena.reaserch(self, text)
         elif "translate" in text:
-            gTranslate()
+            gWorkPlzTranslate(self)
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
@@ -158,11 +152,10 @@ class Athena:
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
     
-    def gTranslate():
+    def gWorkPlzTranslate(self):
         
         import speech_recognition as ssr     # import the library
-    
-        def getWhatYouSay(a, b):                 # initialize recognizer
+        def getWhatYouSay(a, b):             # initialize recognizer
             with sr.Microphone() as source:  
                 rr = ssr.Recognizer()   # mention source it will be either Microphone or audio files.
                 audio = rr.record(source, duration=a, offset=b)     # listen to the source
@@ -170,6 +163,7 @@ class Athena:
                 text = text.lower()
                 #print(text)    # use recognizer to convert our audio into text part.
                 return text
+
         engine = tts.init()
         voices = engine.getProperty("voices")
         engine.setProperty("voice", voices[1].id)
@@ -190,7 +184,6 @@ class Athena:
         say("The translation has been printed")
         translated = translator.translate(eng)
         print("The translation is: " + translated)
-
 
 while True:
     #runAthena(self=Athena())
