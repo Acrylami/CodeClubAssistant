@@ -6,8 +6,9 @@ import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
-#import other funcs
-import gTranslate
+#import other funcs other tings are in externalTings
+import externalFunctionality.gTranslate as gTranslate
+
 
 # INITS
 listener = sr.Recognizer()
@@ -64,18 +65,13 @@ class Athena:
             if not sr.Microphone:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
-                listener = sr.Recognizer()
-                engine = tts.init()
-                voices = engine.getProperty("voices")
-                engine.setProperty("voice", voices[1].id)
                 print("listening...")
                 voice = listener.listen(source)
-                text = listener.recognize_google(voice, language='en-UK')
+                text = listener.recognize_google(voice)
                 text = text.lower()
-        except Exception as ex:
+        except sr.UnknownValueError:
             text = ""
-            print(ex)
-            
+            pass    
         if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
             print("woken...")
             text = text.replace("athena", "")
