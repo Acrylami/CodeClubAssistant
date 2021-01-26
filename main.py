@@ -74,6 +74,7 @@ class Athena:
             print("woken...")
             text = text.replace("athena", "")
             text = text.replace("athina", "")
+            text = text.replace("tatis", "")
         
         if "play" in text:
             Athena.play(self, text)
