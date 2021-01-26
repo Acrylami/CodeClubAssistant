@@ -8,6 +8,7 @@ import webbrowser as wb
 import pyglet  # better audio output
 from translate import Translator
 import speech_recognition as ssr
+import time
 #import other funcs
 
 
@@ -43,6 +44,7 @@ ciVol = lambda a, b : (pi * (a ** 2)) * b                       # cilyndr volume
 sArea = lambda a : 4 * pi * (a ** 2)
 sVol = lambda a : (4/3) * pi * (a ** 3)
 
+skipTranslation = False
 
 def play_sound(filePath):
     sound = pyglet.resource.media(filePath)
@@ -53,6 +55,8 @@ def play_sound(filePath):
 def say(string):
     engine.say(string)
     engine.runAndWait()
+    
+recog = sr
 
 class Athena:
     def runAthena(self):
@@ -61,7 +65,7 @@ class Athena:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
                 print("listening...")
-                voice = listener.record(source, duration=2, offset=None)
+                voice = listener.record(source, duration=3, offset=None)
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
         except:
@@ -161,28 +165,36 @@ class Athena:
                     audio = rr.record(source, duration=a, offset=b)     # listen to the source
                     text = rr.recognize_google(audio)
                     text = text.lower()
+                    skipTranslation = False
                     #print(text)    # use recognizer to convert our audio into text part.
                     return text
             except:
                 say("There was an issue with the microphone, try and answer multiple times or try and say it louder")
                 print("There was an issue with the microphone, try and answer multiple times or try and say it louder")
-        say("What language would you like to translate into?")
-        lang = getWhatYouSay(3, 2)
-        lang = lang.split()[0]
+                skipTranslation = True
 
-        say("What would you like to translate?")
-        eng = getWhatYouSay(10, 0)
-        print(eng)
+        if skipTranslation == False:        
+            say("What language would you like to translate into?")
+            lang = getWhatYouSay(3, 2)
+            lang = lang.split()[0]
 
-        translator = Translator(to_lang =lang, from_lang="English") ##Translator settings
-        say("The translation has been printed")
-        translated = translator.translate(eng)
-        print("The translation is: " + translated)
-        try:
-            say(translated)
-        except:
-            print("The output language is not supported in speech")
-            say("The output language is not supported in speech")
-while True:
+            say("What would you like to translate?")
+            eng = getWhatYouSay(10, 0)
+            print(eng)
+
+            translator = Translator(to_lang =lang, from_lang="English") ##Translator settings
+            say("The translation has been printed")
+            translated = translator.translate(eng)
+            print("The translation is: " + translated)
+            try:
+                say(translated)
+            except:
+                print("The output language is not supported in speech")
+                say("The output language is not supported in speech")
+        elif skipTranslation == True:
+            print("Translation skipped try and summon again")
+            say("The translation was skipped, you can try again by calling for translation again")
+
+while True: #Program Main loop. This is where all of the code is called!
     #runAthena(self=Athena())
     Athena.runAthena(self = Athena())
