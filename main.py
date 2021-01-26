@@ -6,10 +6,10 @@ import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
-from googletrans import Translator
+#import other funcs
+import gTranslate
 
 # INITS
-translate = Translator()
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
@@ -90,7 +90,7 @@ class Athena:
         elif "research" in text:
             Athena.reaserch(self, text)
         elif "translate" in text:
-            Athena.translate(self, text)
+            gTranslate.translate(text)
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
@@ -156,24 +156,7 @@ class Athena:
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
     
-    def translate(self, input):
-        with sr.Microphone() as source:
-            voice = listener.listen(source)
-            say("What language would you like to translate into?")
-            try:
-                lang = listener.recognize_google(voice)
-            except:
-                lang = ""
-            say("What would you like to translate?")
-            try:
-                eng = listener.recognize_google(voice)
-            except:
-                eng = ""
-            say("The translation has been printed")
-            try:
-                print("The translation is: " + translate.translate(eng, dest=lang))
-            except:
-                say("Sorry, the language you requested is not recognised.")
+    
 
 while True:
     #runAthena(self=Athena())
