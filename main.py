@@ -64,12 +64,18 @@ class Athena:
             if not sr.Microphone:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
+                listener = sr.Recognizer()
+                engine = tts.init()
+                voices = engine.getProperty("voices")
+                engine.setProperty("voice", voices[1].id)
                 print("listening...")
                 voice = listener.listen(source)
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
-        except:
+        except Exception as ex:
             text = ""
+            print(ex)
+            
         if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
             print("woken...")
             text = text.replace("athena", "")

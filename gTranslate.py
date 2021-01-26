@@ -1,8 +1,12 @@
 from googletrans import Translator
 import speech_recognition as sr  # module to mic input
 import pyttsx3 as tts  # text-to-speech
+import pywhatkit as pwk  # finds songs through YouTube
+import datetime  # retrieves dates and times
+import wikipedia  # opens Wikipedia pages
+import webbrowser as wb
+import pyglet  # better audio output
 
-translate = Translator()
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
@@ -14,7 +18,14 @@ def say(string):
 
 def translate(input):
         with sr.Microphone() as source:
-            voice = listener.listen(source)
+            listener = sr.Recognizer()
+            engine = tts.init()
+            voices = engine.getProperty("voices")
+            engine.setProperty("voice", voices[1].id)
+            whereComeFrom = listener.listen(source)
+            voice = listener.recognize_google(whereComeFrom, language='en-UK')
+            text = text.lower()
+
             say("What language would you like to translate into?")
             try:
                 lang = listener.recognize_google(voice)
