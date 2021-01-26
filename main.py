@@ -6,8 +6,9 @@ import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
+from translate import Translator
 #import other funcs
-import externalTings.gTranslate
+
 
 # INITS
 listener = sr.Recognizer()
@@ -46,18 +47,17 @@ def play_sound(filePath):
     sound.play()
     pyglet.app.run()
 
-
 def getTextFile(file):
     f = open(file, "r")
     return f.read()
-
 
 def say(string):
     engine.say(string)
     engine.runAndWait()
 
 
-    
+
+
 class Athena:
     def runAthena(self):
         try:
@@ -65,7 +65,7 @@ class Athena:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
                 print("listening...")
-                voice = listener.listen_in_background(source)
+                voice = listener.listen(source)
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
         except:
@@ -92,7 +92,7 @@ class Athena:
         elif "research" in text:
             Athena.reaserch(self, text)
         elif "translate" in text:
-            externalTings.gTranslate.translate()
+            gTranslate()
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
@@ -158,7 +158,39 @@ class Athena:
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
     
-     
+    def gTranslate():
+        
+        import speech_recognition as ssr     # import the library
+    
+        def getWhatYouSay(a, b):                 # initialize recognizer
+            with sr.Microphone() as source:  
+                rr = ssr.Recognizer()   # mention source it will be either Microphone or audio files.
+                audio = rr.record(source, duration=a, offset=b)     # listen to the source
+                text = rr.recognize_google(audio)
+                text = text.lower()
+                #print(text)    # use recognizer to convert our audio into text part.
+                return text
+        engine = tts.init()
+        voices = engine.getProperty("voices")
+        engine.setProperty("voice", voices[1].id)
+
+        def say(string):
+            engine.say(string)
+            engine.runAndWait()
+
+        say("What language would you like to translate into?")
+        lang = getWhatYouSay(3, 2)
+        lang = lang.split()[0]
+
+        say("What would you like to translate?")
+        eng = getWhatYouSay(10, 0)
+        print(eng)
+
+        translator = Translator(to_lang =lang, from_lang="English") ##Translator settings
+        say("The translation has been printed")
+        translated = translator.translate(eng)
+        print("The translation is: " + translated)
+
 
 while True:
     #runAthena(self=Athena())

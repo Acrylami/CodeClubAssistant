@@ -1,5 +1,5 @@
 
-def translateText():
+def gTranslate():
     import pyglet  # better audio outputS
     import pyttsx3 as tts
     from translate import Translator
