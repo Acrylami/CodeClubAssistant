@@ -6,9 +6,8 @@ import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
-#import other funcs other tings are in externalTings
-import externalFunctionality.gTranslate as gTranslate
-
+#import other funcs
+import gTranslate
 
 # INITS
 listener = sr.Recognizer()
@@ -67,11 +66,10 @@ class Athena:
             with sr.Microphone() as source:
                 print("listening...")
                 voice = listener.listen(source)
-                text = listener.recognize_google(voice)
+                text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
-        except sr.UnknownValueError:
+        except:
             text = ""
-            pass    
         if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
             print("woken...")
             text = text.replace("athena", "")
@@ -160,7 +158,7 @@ class Athena:
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
     
-    
+     
 
 while True:
     #runAthena(self=Athena())
