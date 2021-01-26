@@ -70,11 +70,12 @@ class Athena:
                 text = text.lower()
         except:
             text = ""
-        if "athena" in text or "athina" in text or "tatis" in text:
+        if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
             print("woken...")
             text = text.replace("athena", "")
             text = text.replace("athina", "")
             text = text.replace("tatis", "")
+            text = text.replace("tatos", "")
         
         if "play" in text:
             Athena.play(self, text)
