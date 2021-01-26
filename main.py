@@ -7,6 +7,7 @@ import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
 from translate import Translator
+import speech_recognition as ssr
 #import other funcs
 
 
@@ -15,6 +16,7 @@ listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
+
 
 #Calculator FUNCS:
 
@@ -59,7 +61,7 @@ class Athena:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
                 print("listening...")
-                voice = listener.listen(source)
+                voice = listener.record(source, duration=2, offset=None)
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
         except:
@@ -86,7 +88,7 @@ class Athena:
         elif "research" in text:
             Athena.reaserch(self, text)
         elif "translate" in text:
-            gWorkPlzTranslate(self)
+            Athena.translationModule(self)
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
@@ -137,7 +139,6 @@ class Athena:
     # say(command.replace("repeat", ""))
 
     def bitesize(self, input):  # DONE
-
         search = input.replace("bitesize", "")
         search = search.replace(" ", "+")
         search = search.replace("++", "")
@@ -152,26 +153,19 @@ class Athena:
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
     
-    def gWorkPlzTranslate(self):
-        
-        import speech_recognition as ssr     # import the library
-        def getWhatYouSay(a, b):             # initialize recognizer
-            with sr.Microphone() as source:  
-                rr = ssr.Recognizer()   # mention source it will be either Microphone or audio files.
-                audio = rr.record(source, duration=a, offset=b)     # listen to the source
-                text = rr.recognize_google(audio)
-                text = text.lower()
-                #print(text)    # use recognizer to convert our audio into text part.
-                return text
-
-        engine = tts.init()
-        voices = engine.getProperty("voices")
-        engine.setProperty("voice", voices[1].id)
-
-        def say(string):
-            engine.say(string)
-            engine.runAndWait()
-
+    def translationModule(self):
+        def getWhatYouSay(a, b):
+            try:# initialize recognizer
+                with sr.Microphone() as source:  
+                    rr = ssr.Recognizer()   # mention source it will be either Microphone or audio files.
+                    audio = rr.record(source, duration=a, offset=b)     # listen to the source
+                    text = rr.recognize_google(audio)
+                    text = text.lower()
+                    #print(text)    # use recognizer to convert our audio into text part.
+                    return text
+            except:
+                say("There was an issue with the microphone, try and answer multiple times or try and say it louder")
+                print("There was an issue with the microphone, try and answer multiple times or try and say it louder")
         say("What language would you like to translate into?")
         lang = getWhatYouSay(3, 2)
         lang = lang.split()[0]
@@ -184,7 +178,11 @@ class Athena:
         say("The translation has been printed")
         translated = translator.translate(eng)
         print("The translation is: " + translated)
-
+        try:
+            say(translated)
+        except:
+            print("The output language is not supported in speech")
+            say("The output language is not supported in speech")
 while True:
     #runAthena(self=Athena())
     Athena.runAthena(self = Athena())
