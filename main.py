@@ -7,7 +7,7 @@ import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
 #import other funcs
-import gTranslate
+import externalTings.gTranslate
 
 # INITS
 listener = sr.Recognizer()
@@ -65,7 +65,7 @@ class Athena:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
                 print("listening...")
-                voice = listener.listen(source)
+                voice = listener.listen_in_background(source)
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
         except:
@@ -92,7 +92,7 @@ class Athena:
         elif "research" in text:
             Athena.reaserch(self, text)
         elif "translate" in text:
-            gTranslate.translate(text)
+            externalTings.gTranslate.translate()
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE

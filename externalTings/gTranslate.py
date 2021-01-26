@@ -1,31 +1,38 @@
-import pyglet  # better audio output
-import VRFEF
-import pyttsx3 as tts
-from translate import Translator
 
+def translateText():
+    import pyglet  # better audio outputS
+    import pyttsx3 as tts
+    from translate import Translator
+    import speech_recognition as sr     # import the library
+ 
+    def getWhatYouSay(a, b):                 # initialize recognizer
+        with sr.Microphone() as source:  
+            r = sr.Recognizer()   # mention source it will be either Microphone or audio files.
+            audio = r.record(source, duration=a, offset=b)     # listen to the source
+            text = r.recognize_google(audio)
+            text = text.lower()
+            #print(text)    # use recognizer to convert our audio into text part.
+            return text
+    engine = tts.init()
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[1].id)
 
-engine = tts.init()
-voices = engine.getProperty("voices")
-engine.setProperty("voice", voices[1].id)
-
-def say(string):
-    engine.say(string)
-    engine.runAndWait()
-
-def translateText(input):
+    def say(string):
+        engine.say(string)
+        engine.runAndWait()
 
     say("What language would you like to translate into?")
-    lang = VRFEF.getWhatYouSay(3, 0)
-    print(lang)
+    lang = getWhatYouSay(3, 2)
+    lang = lang.split()[0]
 
     say("What would you like to translate?")
-    eng = VRFEF.getWhatYouSay(5, 0)
+    eng = getWhatYouSay(10, 0)
     print(eng)
 
+    translator = Translator(to_lang =lang, from_lang="English") ##Translator settings
     say("The translation has been printed")
-    print("The translation is: " + Translator.translate(eng, to_lang=lang))
-    
-    say("Sorry, the language you requested is not recognised.")
-    print("Guess what lol")
+    translated = translator.translate(eng)
+    print("The translation is: " + translated)
 
-translateText("cats")
+    
+translateText()
