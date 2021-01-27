@@ -227,21 +227,96 @@ class Athena:
             except:
                 print("The answer is", answer)
 
-        elif "define" in text:
-            Athena.define(self, text)
-        elif "search wikipedia for" in text:
-            Athena.searchWikipedia(self, text)
-        elif "what does" in text:
-            Athena.whatdoes(self, text)
-        elif "bitesize" in text or "bite size" in text:
-            Athena.bitesize(self, text)
-        elif "research" in text:
-            Athena.reaserch(self, text)
-        elif "translate" in text:
-            Athena.translationModule(self)
-        elif "calculate" in text:
-            Athena.run_calculator(self, text)
+        elif "x" in text:
+            text = text.replace("x", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = times(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
 
+        elif "/" in text:
+            text = text.replace("/", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = divide(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "^" in text:
+            text = text.replace("^", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = power(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "squared" in text:
+            text = text.replace("squared", "")
+            text = text.split()
+            a = int(text[0])
+            answer = power(a, 2)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+        
+        elif "cubed" in text:
+            text = text.replace("cubed", "")
+            text = text.split()
+            a = int(text[0])
+            answer = power(a, 3)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "root" in text:
+            text = text.replace("to the", "")
+            text = text.replace("th", "")
+            text = text.replace("st", "")
+            text = text.replace("nd", "")
+            text = text.replace("second", "2")
+            text = text.replace("rd", "")
+            text = text.replace("root", "")
+            text = text.replace("route", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = root(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "square" in text:
+            text = text.replace("square root of", "")
+            text = text.split()
+            a = int(text[0])
+            answer = root(a, 2)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "cube" in text:
+            text = text.replace("cube root of", "")
+            text = text.split()
+            a = int(text[0])
+            answer = root(a, 3)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
 
 while True: #Program Main loop. This is where all of the code is called!
     #runAthena(self=Athena())
