@@ -69,7 +69,7 @@ class Athena:
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
                 print("woken...")
-                if "athena" in text or "athina" in text or "tatis" in text or "tatos" in command:
+                if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
                     text = text.replace("athena", "")
                     text = text.replace("athina", "")
                     text = text.replace("tatis", "")
