@@ -55,8 +55,7 @@ def play_sound(filePath):
 def say(string):
     engine.say(string)
     engine.runAndWait()
-    
-recog = sr
+
 
 class Athena:
     def runAthena(self):
@@ -92,7 +91,7 @@ class Athena:
                     elif "research" in text:
                         Athena.reaserch(self, text)
                     elif "translate" in text:
-                        Athena.translationModule(self)
+                        Athena.translationModule(self, text)
                     elif "calculate" in text:
                         Athena.run_calculator(self, text)
                     else:
@@ -164,43 +163,24 @@ class Athena:
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
     
-    def translationModule(self):
-        def getWhatYouSay(a, b):
-            try:# initialize recognizer
-                with sr.Microphone() as source:  
-                    rr = ssr.Recognizer()   # mention source it will be either Microphone or audio files.
-                    audio = rr.record(source, duration=a, offset=b)     # listen to the source
-                    text = rr.recognize_google(audio)
-                    text = text.lower()
-                    skipTranslation = False
-                    #print(text)    # use recognizer to convert our audio into text part.
-                    return text
-            except:
-                say("There was an issue with the microphone, try and answer multiple times or try and say it louder")
-                print("There was an issue with the microphone, try and answer multiple times or try and say it louder")
-                skipTranslation = True
+    def translationModule(self, input):
+        string = input
+        string = string.replace("translate", "")
+        string = string.replace("  ", "")
+        string = string.replace(" into ", "|")
+        stringSplitted = string.split("|", 1)
+        eng = stringSplitted[0]
+        lang = stringSplitted[1]
 
-        if skipTranslation == False:        
-            say("What language would you like to translate into?")
-            lang = getWhatYouSay(3, 2)
-            lang = lang.split()[0]
-
-            say("What would you like to translate?")
-            eng = getWhatYouSay(10, 0)
-            print(eng)
-
-            translator = Translator(to_lang =lang, from_lang="English") ##Translator settings
-            say("The translation has been printed")
-            translated = translator.translate(eng)
-            print("The translation is: " + translated)
-            try:
-                say(translated)
-            except:
-                print("The output language is not supported in speech")
-                say("The output language is not supported in speech")
-        elif skipTranslation == True:
-            print("Translation skipped try and summon again")
-            say("The translation was skipped, you can try again by calling for translation again")
+        translator = Translator(to_lang=lang, from_lang="English") ##Translator settings
+        say("The translation has been printed")
+        translated = translator.translate(eng)
+        print("The translation is: " + translated)
+        try:
+            say(translated)
+        except:
+            print("The output language is not supported in speech")
+            say("The output language is not supported in speech")
 
     def run_calculator(self, text):
         global answer
