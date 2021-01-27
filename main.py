@@ -65,34 +65,37 @@ class Athena:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
                 print("listening...")
-                voice = listener.record(source, duration=3, offset=None)
+                voice = listener.listen(source)
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
+                print("woken...")
+                if "athena" in text or "athina" in text or "tatis" in text or "tatos" in command:
+                    text = text.replace("athena", "")
+                    text = text.replace("athina", "")
+                    text = text.replace("tatis", "")
+                    text = text.replace("tatos", "")
+                    
+                    if "play" in text:
+                        Athena.play(self, text)
+                    elif "time" in text:
+                        Athena.time(self, text)
+                    elif "define" in text:
+                        Athena.define(self, text)
+                    elif "search wikipedia for" in text:
+                        Athena.searchWikipedia(self, text)
+                    elif "what does" in text:
+                        Athena.whatdoes(self, text)
+                    elif "bitesize" in text or "bite size" in text:
+                        Athena.bitesize(self, text)
+                    elif "research" in text:
+                        Athena.reaserch(self, text)
+                    elif "translate" in text:
+                        Athena.translationModule(self)
+                    else:
+                        pass
         except:
-            text = ""
-        if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
-            print("woken...")
-            text = text.replace("athena", "")
-            text = text.replace("athina", "")
-            text = text.replace("tatis", "")
-            text = text.replace("tatos", "")
+            pass
         
-        if "play" in text:
-            Athena.play(self, text)
-        elif "time" in text:
-            Athena.time(self, text)
-        elif "define" in text:
-            Athena.define(self, text)
-        elif "search wikipedia for" in text:
-            Athena.searchWikipedia(self, text)
-        elif "what does" in text:
-            Athena.whatdoes(self, text)
-        elif "bitesize" in text or "bite size" in text:
-            Athena.bitesize(self, text)
-        elif "research" in text:
-            Athena.reaserch(self, text)
-        elif "translate" in text:
-            Athena.translationModule(self)
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
