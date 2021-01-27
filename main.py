@@ -93,6 +93,8 @@ class Athena:
                         Athena.reaserch(self, text)
                     elif "translate" in text:
                         Athena.translationModule(self)
+                    elif "calculate" in text:
+                        Athena.run_calculator(self, text)
                     else:
                         pass
         except:
@@ -199,6 +201,47 @@ class Athena:
         elif skipTranslation == True:
             print("Translation skipped try and summon again")
             say("The translation was skipped, you can try again by calling for translation again")
+
+    def run_calculator(self, text):
+        global answer
+        text = text.replace("calculate", "")
+        if "+" in text:
+            text = text.replace("+", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = add(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "-" in text:
+            text = text.replace("-", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = minus(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "define" in text:
+            Athena.define(self, text)
+        elif "search wikipedia for" in text:
+            Athena.searchWikipedia(self, text)
+        elif "what does" in text:
+            Athena.whatdoes(self, text)
+        elif "bitesize" in text or "bite size" in text:
+            Athena.bitesize(self, text)
+        elif "research" in text:
+            Athena.reaserch(self, text)
+        elif "translate" in text:
+            Athena.translationModule(self)
+        elif "calculate" in text:
+            Athena.run_calculator(self, text)
+
 
 while True: #Program Main loop. This is where all of the code is called!
     #runAthena(self=Athena())
