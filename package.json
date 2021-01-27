@@ -1,0 +1,20 @@
+{
+  "name": "CodeClubAssistant",
+  "version": "1.0.0",
+  "description": "Athena is a virtual assistant to help teachers to optimise their virtual teaching in the 'new normal'.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Acrylami/CodeClubAssistant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Acrylami/CodeClubAssistant/issues"
+  },
+  "homepage": "https://github.com/Acrylami/CodeClubAssistant#readme"
+}

@@ -1,9 +1,0 @@
-class [CLASS_NAME]:
-    def __init__(self):
-        [IMPORT EVERYTHING HERE]
-
-def [FUNCTION_NAME](self):
-    [ALL OF YOUR CODE GOES HERE
-     MUST RETURN THE OUTPUT    ]
-#call in main.py:
- FILE_NAME.CLASS_NAME.FUNCTION_NAME(self = CLASS_NAME)
