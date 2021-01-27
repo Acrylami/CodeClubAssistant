@@ -6,23 +6,45 @@ import datetime  # retrieves dates and times
 import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
+from translate import Translator
+import speech_recognition as ssr
+import time
+#import other funcs
+
 
 # INITS
-
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
 
-list_1 = []
-try:
-    with open("config.txt") as f:
-        for line in f:
-            list_1.append(line.strip('\n\r'))
-except:
-    pass
-    print("Failed to initialize\ninsure that 'config.txt' is installed in the same folder as this script")
 
+#Calculator FUNCS:
+
+#All in radius
+pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+
+#Basic
+add = lambda a, b : a + b
+minus = lambda a, b : a - b
+times = lambda a, b : a * b
+divide = lambda a, b : a / b
+
+#More less Basic
+power = lambda a, b : a ** b
+root = lambda a, b : a ** (b ** -1)
+
+#BrainBogglers
+cArea = lambda a :  pi * (a ** 2)                               # circle Area
+cCum = lambda a : (a * 2) * pi                                  # circle circumferance
+ciArea = lambda a, b : ((pi * (a ** 2)) * 2) + ((a * 2) * pi)   # cilyndr area
+ciVol = lambda a, b : (pi * (a ** 2)) * b                       # cilyndr volume
+
+#GigaBogglers
+sArea = lambda a : 4 * pi * (a ** 2)
+sVol = lambda a : (4/3) * pi * (a ** 3)
+
+skipTranslation = False
 
 def play_sound(filePath):
     sound = pyglet.resource.media(filePath)
@@ -30,59 +52,53 @@ def play_sound(filePath):
     pyglet.app.run()
 
 
-def getTextFile(file):
-    f = open(file, "r")
-    return f.read()
-
-
 def say(string):
     engine.say(string)
     engine.runAndWait()
-    print("DK why not working. Get main code working first")
-
-
-def runAthena(self):
-    try:
-        command = Athena.sampleAudio(self)
-        if "play" in command:
-            Athena.play(self, command)
-        elif "time" in command:
-            Athena.time(self, command)
-        elif "define" in command:
-            Athena.define(self, command)
-        elif "search wikipedia for" in command:
-            Athena.searchWikipedia(self, command)
-        elif "what does" in command:
-            Athena.whatdoes(self, command)
-        elif "bitesize" in command or "bite size" in command:
-            Athena.bitesize(self, command)
-        elif "research" in command:
-            Athena.reaserch(self, command)
-    except:
-        print("Error with the play thing\nTypeError: argument of type 'NoneType' is not iterable\nLine 46")
 
 
 class Athena:
-    def sampleAudio(self):
-        if not sr.Microphone:
-            print("Cannot access microphone. See requirements.txt to install PyAudio.")
-        with sr.Microphone() as source:
-            print("listening...")
-            voice = listener.listen(source)
-            try:
-                command = listener.recognize_google(voice)
-            except:
-                command = "There was an error with the google recog. Probs one off error just loop and try again"
-            finally:
-                command = command.lower()
+    def runAthena(self):
+        try:
+            if not sr.Microphone:
+                print("Cannot access microphone. See requirements.txt to install PyAudio.")
+            with sr.Microphone() as source:
+                print("listening...")
+                voice = listener.listen(source)
+                text = listener.recognize_google(voice, language='en-UK')
+                text = text.lower()
+                print("woken...")
+                if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
+                    text = text.replace("athena", "")
+                    text = text.replace("athina", "")
+                    text = text.replace("tatis", "")
+                    text = text.replace("tatos", "")
 
-            for x in list_1:
-                # Debug line for testing what it hears vs the wake words
-                # print(x + " : " + command)
-                if x in command or command in x:
-                    print("woken...")
-                    command = command.replace(x, "")
-                    return command
+                    print(text)
+                    
+                    if "play" in text:
+                        Athena.play(self, text)
+                    elif "time" in text:
+                        Athena.time(self, text)
+                    elif "define" in text:
+                        Athena.define(self, text)
+                    elif "search wikipedia for" in text:
+                        Athena.searchWikipedia(self, text)
+                    elif "what does" in text:
+                        Athena.whatdoes(self, text)
+                    elif "bitesize" in text or "bite size" in text:
+                        Athena.bitesize(self, text)
+                    elif "research" in text:
+                        Athena.reaserch(self, text)
+                    elif "translate" in text:
+                        Athena.translationModule(self, text)
+                    elif "calculate" in text:
+                        Athena.run_calculator(self, text)
+                    else:
+                        pass
+        except:
+            pass
+        
 
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
@@ -133,7 +149,6 @@ class Athena:
     # say(command.replace("repeat", ""))
 
     def bitesize(self, input):  # DONE
-
         search = input.replace("bitesize", "")
         search = search.replace(" ", "+")
         search = search.replace("++", "")
@@ -147,7 +162,142 @@ class Athena:
         print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
+    
+    def translationModule(self, input):
+        string = input
+        string = string.replace("translate", "")
+        string = string.replace("  ", "")
+        string = string.replace(" into ", "|")
+        stringSplitted = string.split("|", 1)
+        eng = stringSplitted[0]
+        lang = stringSplitted[1]
 
+        translator = Translator(to_lang=lang, from_lang="English") ##Translator settings
+        say("The translation has been printed")
+        translated = translator.translate(eng)
+        print("The translation is: " + translated)
+        try:
+            say(translated)
+        except:
+            print("The output language is not supported in speech")
+            say("The output language is not supported in speech")
 
-while True:
-    runAthena(self=Athena())
+    def run_calculator(self, text):
+        global answer
+        text = text.replace("calculate", "")
+        if "+" in text:
+            text = text.replace("+", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = add(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "-" in text:
+            text = text.replace("-", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = minus(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "x" in text:
+            text = text.replace("x", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = times(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "/" in text:
+            text = text.replace("/", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = divide(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "^" in text:
+            text = text.replace("^", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = power(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "squared" in text:
+            text = text.replace("squared", "")
+            text = text.split()
+            a = int(text[0])
+            answer = power(a, 2)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+        
+        elif "cubed" in text:
+            text = text.replace("cubed", "")
+            text = text.split()
+            a = int(text[0])
+            answer = power(a, 3)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "root" in text:
+            text = text.replace("to the", "")
+            text = text.replace("th", "")
+            text = text.replace("st", "")
+            text = text.replace("nd", "")
+            text = text.replace("second", "2")
+            text = text.replace("rd", "")
+            text = text.replace("root", "")
+            text = text.replace("route", "")
+            text = text.split()
+            a = int(text[0])
+            b = int(text[1])
+            answer = root(a, b)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "square" in text:
+            text = text.replace("square root of", "")
+            text = text.split()
+            a = int(text[0])
+            answer = root(a, 2)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+        elif "cube" in text:
+            text = text.replace("cube root of", "")
+            text = text.split()
+            a = int(text[0])
+            answer = root(a, 3)
+            try:
+                say("The answer is " + str(answer))
+            except:
+                print("The answer is", answer)
+
+while True: #Program Main loop. This is where all of the code is called!
+    #runAthena(self=Athena())
+    Athena.runAthena(self = Athena())
