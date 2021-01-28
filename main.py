@@ -94,6 +94,8 @@ class Athena:
                         Athena.translationModule(self, text)
                     elif "calculate" in text or "what's" in text:
                         Athena.run_calculator(self, text)
+                    elif "classrooms" in text:
+                        Athena.classroom(self, text)
                     else:
                         pass
         except:
@@ -297,6 +299,8 @@ class Athena:
                 say("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
+    def classroom(self, input):
+        print("classroom")
 
 while True: #Program Main loop. This is where all of the code is called!
     #runAthena(self=Athena())
