@@ -10,7 +10,7 @@ from translate import Translator
 import speech_recognition as ssr
 import time
 #import other funcs
-
+# hello
 
 # INITS
 listener = sr.Recognizer()
