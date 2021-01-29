@@ -1,0 +1,19 @@
+{
+  "name": "adding-python",
+  "version": "1.0.0",
+  "description": "Adding python to electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "S",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^11.2.1"
+  },
+  "dependencies": {
+    "electron-eval": "^0.9.10",
+    "python-shell": "^2.0.3"
+  }
+}
