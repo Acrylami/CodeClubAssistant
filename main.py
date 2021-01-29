@@ -92,8 +92,10 @@ class Athena:
                         Athena.reaserch(self, text)
                     elif "translate" in text:
                         Athena.translationModule(self, text)
-                    elif "calculate" in text:
+                    elif "calculate" in text or "what's" in text:
                         Athena.run_calculator(self, text)
+                    elif "classrooms" in text:
+                        Athena.classroom(self, text)
                     else:
                         pass
         except:
@@ -183,8 +185,8 @@ class Athena:
             say("The output language is not supported in speech")
 
     def run_calculator(self, text):
-        global answer
         text = text.replace("calculate", "")
+        text = text.replace("what's", "")
         if "+" in text:
             text = text.replace("+", "")
             text = text.split()
@@ -297,6 +299,8 @@ class Athena:
                 say("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
+    def classroom(self, input):
+        print("classroom")
 
     def msteams(self):
         pass
