@@ -1,0 +1,25 @@
+.bottom {
+    vertical-align: text-bottom;
+}
+.sticky {
+    position: sticky;
+    width: 50%;
+    bottom: 10px;
+    border: 3px solid #8AC007;
+}
+.parent {
+    position: relative;
+    height: 200px;
+    border: 3px solid red;
+}
+.alert {
+    width: 30px;
+    height: 10px;
+}
+
+body {
+    background: #E55D87;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #5FC3E4, #E55D87);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #5FC3E4, #E55D87); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
