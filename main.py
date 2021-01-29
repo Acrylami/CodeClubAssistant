@@ -298,6 +298,11 @@ class Athena:
             except:
                 print("The answer is", answer)
 
+    def msteams(self):
+        pass
+        
+
+
 while True: #Program Main loop. This is where all of the code is called!
     #runAthena(self=Athena())
     Athena.runAthena(self = Athena())
