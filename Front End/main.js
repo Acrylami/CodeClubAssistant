@@ -1,19 +1,16 @@
-const electron = require('electron');
-const url = require('url');
-const path = require('path');
+const {app, BrowserWindow} = require('electron');
 
-const {app, BrowserWindow} = electron;
+function createWindow () {
+    window = new BrowserWindow({width: 800, height: 600})
+    window.loadFile('index.html')
+  }
 
-let mainWindow;
+app.on('ready', createWindow)
 
-// Listen for app to be ready
-app.on('ready', function(){
-    //create new window
-    mainWindow = new BrowserWindow({});
-    //load html into window
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'mainWindow.html'),
-        protocol:'file:',
-        slashes: true
-    }));
-});
+app.on('window-all-closed', () => {
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
+  })

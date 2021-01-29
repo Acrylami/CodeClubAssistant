@@ -92,7 +92,7 @@ class Athena:
                         Athena.reaserch(self, text)
                     elif "translate" in text:
                         Athena.translationModule(self, text)
-                    elif "calculate" in text:
+                    elif "calculate" in text or "what's" in text:
                         Athena.run_calculator(self, text)
                     else:
                         pass
@@ -183,8 +183,8 @@ class Athena:
             say("The output language is not supported in speech")
 
     def run_calculator(self, text):
-        global answer
         text = text.replace("calculate", "")
+        text = text.replace("what's", "")
         if "+" in text:
             text = text.replace("+", "")
             text = text.split()
@@ -297,6 +297,15 @@ class Athena:
                 say("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
+
+
+
+
+
+
+
+
+
 
 while True: #Program Main loop. This is where all of the code is called!
     #runAthena(self=Athena())

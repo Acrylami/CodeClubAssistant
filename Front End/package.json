@@ -9,6 +9,10 @@
   "author": "Code Club",
   "license": "ISC",
   "dependencies": {
+    "child_process": "^1.0.2",
+    "python-shell": "^2.0.3"
+  },
+  "devDependencies": {
     "electron": "^11.2.1"
   }
 }
