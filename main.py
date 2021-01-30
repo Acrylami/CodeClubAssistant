@@ -299,14 +299,6 @@ class Athena:
                 print("The answer is", answer)
 
 
-
-
-
-
-
-
-
-
 while True: #Program Main loop. This is where all of the code is called!
     #runAthena(self=Athena())
     Athena.runAthena(self = Athena())
