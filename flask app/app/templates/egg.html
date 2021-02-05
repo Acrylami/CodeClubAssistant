@@ -1,0 +1,31 @@
+<!-- index.html-->
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="jumbotron">
+    <h1>{{ string }} Is Awesome</h1>
+    <p class="lead">And I'm glad to be learning so much about it!</p>
+    
+        <form method="POST" action="" autocomplete="off">
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="form-group">
+                        <label class="bmd-label-floating"> {{ form.command.label }} </label>
+                        {{ form.command }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-info pull-right btn-lg" value=Login>Submit</button>
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+</div>
+{% endblock %}
