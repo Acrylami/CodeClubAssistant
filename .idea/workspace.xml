@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f4d46b0-75e0-476d-ab5d-804b66a94aa3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask app/app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/flask app/app/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask app/app/templates/fartocel.html" beforeDir="false" afterPath="$PROJECT_DIR$/flask app/app/templates/fartocel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask app/app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask app/app/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +24,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Colors" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -52,6 +56,13 @@
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f4d46b0-75e0-476d-ab5d-804b66a94aa3" name="Default Changelist" comment="" />
+      <created>1612541999410</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612541999410</updated>
+    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -74,9 +85,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1899" height="304" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1611340601181" />
-    <state x="461" y="184" key="SettingsEditor" timestamp="1611340596180">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="328" y="18" key="SettingsEditor" timestamp="1612543925652">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="328" y="18" key="SettingsEditor/0.0.1366.728/1366.0.1680.1010@0.0.1366.728" timestamp="1612543925652" />
     <state x="461" y="184" key="SettingsEditor/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1611340596180" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1612543448579">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728/1366.0.1680.1010@0.0.1366.728" timestamp="1612543448579" />
   </component>
 </project>
