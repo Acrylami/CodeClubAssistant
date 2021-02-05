@@ -32,7 +32,8 @@ def egg_route():
     egg = "uwu"
 
     if form.validate_on_submit():
-        return render_template('result.html', command=form.command)
+        processed = str(form.command.data) + " is a silly command"
+        return render_template('result.html', command=processed)
     
     return render_template("egg.html", string=egg, form=form)
 
