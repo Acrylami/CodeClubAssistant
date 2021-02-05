@@ -86,7 +86,6 @@ def say(string):
 
 class Athena:
     def runAthena(self):
-        print("hello world")
         try:
             if not sr.Microphone:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
