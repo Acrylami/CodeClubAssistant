@@ -1,1 +1,3 @@
 DEBUG = True
+
+#Lol what
