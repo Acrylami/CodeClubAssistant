@@ -15,13 +15,13 @@
   </form>
 
   <input type="text" name="search" size="31" maxlength="255" value="" id="search">
-    <script type="javascript">
-      function athenaByTextFunction()
-      {
+    <script type="text/javascript">
+      function athenaByTextFunction(){
         var searchBarValue = document.getElementById("search").value;
         var replaced = searchBarValue.split(' ').join('+');
-        console.log(replaced);
         searchBarValue = '/search?' + replaced;
+        console.log(searchBarValue);
+        javascript:window.location.href=searchBarValue;
       }
     </script>
 
