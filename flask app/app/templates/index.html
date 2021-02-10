@@ -14,11 +14,19 @@
     <input type="image" src="{{url_for('static', filename='micWIP.png')}}" style="width:20%; height:automatic" alt="Microphone Image"> 
   </form>
 
-    <form action="{{ url_for('callAthena') }}" method="get">
-      <input type="text" name="search" size="31" maxlength="255" value="" id="text">
-      <button type="submit">Enter</button>
+  <input type="text" name="search" size="31" maxlength="255" value="" id="search">
+    <script type="javascript">
+      function athenaByTextFunction()
+      {
+        var searchBarValue = document.getElementById("search").value;
+        var replaced = searchBarValue.split(' ').join('+');
+        console.log(replaced);
+        searchBarValue = '/search?' + replaced;
+      }
+    </script>
 
-    </form>
+    <button onclick="athenaByTextFunction()">Enter</button>
+  
   </div>
 </div>
 {% endblock %}

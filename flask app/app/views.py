@@ -1,3 +1,13 @@
+import speech_recognition as sr  # module to mic input
+import pyttsx3 as tts  # text-to-speech
+import pywhatkit as pwk  # finds songs through YouTube
+import datetime  # retrieves dates and times
+import wikipedia  # opens Wikipedia pages
+import webbrowser as wb
+import pyglet  # better audio output
+from translate import Translator
+import time
+
 # views.py
 
 from flask import render_template, Flask, request
@@ -32,15 +42,7 @@ def searchAthena():
 
 
 # Fixed bugs
-import speech_recognition as sr  # module to mic input
-import pyttsx3 as tts  # text-to-speech
-import pywhatkit as pwk  # finds songs through YouTube
-import datetime  # retrieves dates and times
-import wikipedia  # opens Wikipedia pages
-import webbrowser as wb
-import pyglet  # better audio output
-from translate import Translator
-import time
+
 
 # import other funcs
 
