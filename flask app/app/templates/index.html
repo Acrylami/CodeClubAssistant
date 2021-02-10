@@ -4,8 +4,32 @@
 {% block title %}Athena{% endblock %}
 {% block body %}
 <div class="jumbotron">
+  <img src="{{url_for('static', filename='navlogo.png')}}" alt="Nav Logo Image">
   <h1>Welcome to Athena</h1>
+  <br>
   <p class="lead">Welcome to Athena, the virtual assistant.</p>
-  <p class="lead">Click the option in the top right to talk to Athena.</p>
+  <p class="lead">Pressing the microphone icon will open a page to talk to Athena.</p>
+  <br>
+  <form action="callAthena">
+    <input type="image" src="{{url_for('static', filename='micWIP.png')}}" style="width:20%; height:automatic" alt="Microphone Image"> 
+  </form>
+  Athena,
+    <input type="text" name="searchterms" size="31" maxlength="255" value="">
+    <button onclick="return runAthena()">Hehe</button>
+  </div>
 </div>
 {% endblock %}
+
+<!--"{{url_for('static', filename='navlogo.png')}}"-->
+
+<!-- <form name="searchform" onSubmit="return dosearch();">
+    <select name="sengines">
+      <option value="http://www.google.com/search?q=" selected>Google</option>
+      <option value="https://www.ecosia.org/search?q=">Ecosia</option>
+      <option value="https://www.bbc.co.uk/bitesize/search?q=">BBC Bitesize</option>
+      <option value="https://en.wikipedia.org/w/index.php?search=">Wikipedia</option>
+  </select>
+  <input type="text" name="searchterms" size="31" maxlength="255" value="">
+  <input type="submit" name="SearchSubmit" value="Search">
+ 
+  </form>-->

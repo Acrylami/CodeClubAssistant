@@ -26,3 +26,4 @@ yarn-error.log*
 *.pyc
 *.pyc
 designer.exe - Shortcut.lnk
+.vscode/settings.json

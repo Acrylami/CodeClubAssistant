@@ -16,8 +16,8 @@ def about():
 def athena():
     return render_template("athena.html")
 
-@app.route('/startAthenaInBrowser')
-def startAthenaInBrowser():
+@app.route('/callAthena')
+def callAthena():
     Athena.runAthena(self=Athena())
     return render_template("athena.html")
 
