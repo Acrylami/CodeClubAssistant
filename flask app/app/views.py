@@ -1,6 +1,6 @@
 # views.py
 
-from flask import render_template
+from flask import render_template, Flask, request
 from app import app
 
 @app.route('/')
@@ -21,6 +21,12 @@ def callAthena():
     Athena.runAthena(self=Athena())
     return render_template("athena.html")
 
+@app.route('/search?')
+def searchAthena():
+    url = request.full_path
+    url = url.split("?")
+    url = url[1]
+    url = url.replace("+", " ")
 
 #########################################################################
 
