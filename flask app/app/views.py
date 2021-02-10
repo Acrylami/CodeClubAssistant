@@ -37,7 +37,8 @@ def searchAthena():
     url = url.split("?")
     url = url[1]
     url = url.replace("+", " ")
-
+    Athena.processText(self=Athena(), url)
+    return render_template("redirect.html")
 #########################################################################
 
 
