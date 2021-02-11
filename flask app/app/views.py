@@ -39,7 +39,7 @@ def callAthena():
 def searchAthena(searchTerms):
     url = searchTerms
     url = url.replace("+", " ")
-    Athena.processText(self=Athena(), text=url.lower)
+    Athena.processText(self=Athena(), text=url)
     return str(url)
 #########################################################################
 
@@ -112,6 +112,8 @@ class Athena:
     def processText(self, text):
         print(text)
         text = text.lower()
+        say(text)
+        text = "athena" + text
         print("woken...")
         if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
             text = text.replace("athena", "")
