@@ -44,7 +44,7 @@ def searchAthena(searchTerms):
 #########################################################################
 
 
-# Fixed bugs
+# Fixed bugs almost
 
 
 # import other funcs
