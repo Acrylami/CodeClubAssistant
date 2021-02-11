@@ -8,6 +8,10 @@ import pyglet  # better audio output
 from translate import Translator
 import time
 
+urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY = ""
+urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool = True
+
+
 # views.py
 
 from flask import render_template, Flask, request
@@ -31,14 +35,18 @@ def callAthena():
     Athena.runAthena(self=Athena())
     return render_template("athena.html")
 
-@app.route('/search?')
-def searchAthena():
-    url = request.full_path
+@app.route('/?<string:searchTerms>')
+def searchAthena(searchTerms):
+    url = searchTerms
     url = url.split("?")
     url = url[1]
     url = url.replace("+", " ")
-    Athena.processText(self=Athena(), url)
-    return render_template("redirect.html")
+    urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY = url
+    urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool = False
+    print(urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY)
+    print(urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool)
+    Athena.processText(self=Athena())
+    return str(urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY)
 #########################################################################
 
 
@@ -102,6 +110,7 @@ class Athena:
                 print("listening...")
                 voice = listener.listen(source)
                 text = listener.recognize_google(voice, language='en-UK')
+                urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool = True
                 Athena.processText(self, text)
         except:
             pass
@@ -305,7 +314,10 @@ class Athena:
                 print("The answer is", answer)
 
     def processText(self, text):
-        text = text.lower()
+        if urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool == True:
+            text = text.lower()
+        else:
+            text = urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY.lower()
         print("woken...")
         if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
             text = text.replace("athena", "")

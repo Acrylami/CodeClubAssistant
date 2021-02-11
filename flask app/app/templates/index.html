@@ -19,10 +19,9 @@
       function athenaByTextFunction(){
         var searchBarValue = document.getElementById("search").value;
         var replaced = searchBarValue.split(' ').join('+');
-        searchBarValue = '/search?' + replaced;
+        searchBarValue = '/?' + replaced;
         console.log(searchBarValue);
-        javascript:window.location.href=searchBarValue;
-      }
+        javascript:window.location.href=searchBarValue;}
     </script>
 
     <button onclick="athenaByTextFunction()">Enter</button>
