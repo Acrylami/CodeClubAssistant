@@ -4,7 +4,15 @@
 {% block title %}About{% endblock %}
 {% block body %}
 <div class="jumbotron">
-  <h1>The About Page</h1>
-  <p class="lead"><b>Athena can:</b><br><br>Search YouTube<br>Tell the time<br>Define a word<br>Search Wikipedia<br>Search Bitesize<br>Translate to most languages<br>Calculate</p>
+  <img src="{{url_for('static', filename='navlogo.png')}}" alt="Nav Logo Image">
+  <h1>The Commands Page</h1>
+  <p class="lead"><b>Athena...</b>
+    <br>Play<br>
+    Define<br>
+    What's the time<br>
+    Calculate<br>
+    Translate<br>
+    Bitesize<br>
+    Wikipedia</b>
 </div>
 {% endblock %}

@@ -136,7 +136,7 @@ class Athena:
             elif "bitesize" in text or "bite size" in text:
                 Athena.bitesize(self, text)
             elif "research" in text:
-                Athena.reaserch(self, text)
+                Athena.research(self, text)
             elif "translate" in text:
                 Athena.translationModule(self, text)
             elif "calculate" in text or "what's" in text:
@@ -199,7 +199,7 @@ class Athena:
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
 
-    def reaserch(self, input):
+    def research(self, input):
         search = input.replace("research", "")
         search = search.replace(" ", "+")
         print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
