@@ -19,7 +19,7 @@
       function athenaByTextFunction(){
         var searchBarValue = document.getElementById("search").value;
         var replaced = searchBarValue.split(' ').join('+');
-        searchBarValue = '/?' + replaced;
+        searchBarValue = '/text-input|' + replaced;
         console.log(searchBarValue);
         javascript:window.location.href=searchBarValue;}
     </script>

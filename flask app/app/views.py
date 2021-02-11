@@ -35,18 +35,12 @@ def callAthena():
     Athena.runAthena(self=Athena())
     return render_template("athena.html")
 
-@app.route('/?<string:searchTerms>')
+@app.route('/text-input|<string:searchTerms>')
 def searchAthena(searchTerms):
     url = searchTerms
-    url = url.split("?")
-    url = url[1]
     url = url.replace("+", " ")
-    urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY = url
-    urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool = False
-    print(urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY)
-    print(urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool)
-    Athena.processText(self=Athena())
-    return str(urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY)
+    Athena.processText(self=Athena(), text=url.lower)
+    return str(url)
 #########################################################################
 
 
@@ -115,6 +109,38 @@ class Athena:
         except:
             pass
 
+    def processText(self, text):
+        print(text)
+        text = text.lower()
+        print("woken...")
+        if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
+            text = text.replace("athena", "")
+            text = text.replace("athina", "")
+            text = text.replace("tatis", "")
+            text = text.replace("tatos", "")
+
+            print(text)
+
+            if "play" in text:
+                Athena.play(self, text)
+            elif "time" in text:
+                Athena.time(self, text)
+            elif "define" in text:
+                Athena.define(self, text)
+            elif "search wikipedia for" in text:
+                Athena.searchWikipedia(self, text)
+            elif "what does" in text:
+                Athena.whatdoes(self, text)
+            elif "bitesize" in text or "bite size" in text:
+                Athena.bitesize(self, text)
+            elif "research" in text:
+                Athena.reaserch(self, text)
+            elif "translate" in text:
+                Athena.translationModule(self, text)
+            elif "calculate" in text or "what's" in text:
+                Athena.run_calculator(self, text)
+            else:
+                pass
     # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
         song = input.replace("play", "")
@@ -312,38 +338,3 @@ class Athena:
                 say("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
-
-    def processText(self, text):
-        if urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool == True:
-            text = text.lower()
-        else:
-            text = urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY.lower()
-        print("woken...")
-        if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
-            text = text.replace("athena", "")
-            text = text.replace("athina", "")
-            text = text.replace("tatis", "")
-            text = text.replace("tatos", "")
-
-            print(text)
-
-            if "play" in text:
-                Athena.play(self, text)
-            elif "time" in text:
-                Athena.time(self, text)
-            elif "define" in text:
-                Athena.define(self, text)
-            elif "search wikipedia for" in text:
-                Athena.searchWikipedia(self, text)
-            elif "what does" in text:
-                Athena.whatdoes(self, text)
-            elif "bitesize" in text or "bite size" in text:
-                Athena.bitesize(self, text)
-            elif "research" in text:
-                Athena.reaserch(self, text)
-            elif "translate" in text:
-                Athena.translationModule(self, text)
-            elif "calculate" in text or "what's" in text:
-                Athena.run_calculator(self, text)
-            else:
-                pass
