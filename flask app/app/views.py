@@ -40,7 +40,7 @@ def searchAthena(searchTerms):
     url = searchTerms
     url = url.replace("+", " ")
     Athena.processText(self=Athena(), text=url)
-    return str(url)
+    return render_template("index.html")
 #########################################################################
 
 
