@@ -10,8 +10,6 @@ from translate import Translator
 import importlib
 import time
 
-urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY = ""
-urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool = True
 
 
 # views.py
@@ -109,7 +107,6 @@ class Athena:
                 print("listening...")
                 voice = listener.listen(source)
                 text = listener.recognize_google(voice, language='en-UK')
-                urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY_Voice_Bool = True
                 Athena.processText(self, text)
         except:
             pass
