@@ -5,5 +5,6 @@ pip install pipwin
 pipwin install pyaudio
 pip install -r requirements.txt
 pip install -U werkzeug
+cls
 python -m flask run
 pause

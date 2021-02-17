@@ -10,48 +10,6 @@ from translate import Translator
 import importlib
 import time
 
-
-
-# views.py
-
-from flask import render_template, Flask, request
-from app import app
-
-@app.route('/')
-def index():
-    return render_template("index.html")
-
-
-@app.route('/about')
-def about():
-    return render_template("about.html")
-
-@app.route('/athena')
-def athena():
-    return render_template("athena.html")
-	
-@app.route('/calculator')
-def calculator():
-    return render_template("calculator.html")
-
-@app.route('/callAthena')
-def callAthena():
-    Athena.runAthena(self=Athena())
-    return render_template("athena.html")
-
-@app.route('/text-input<string:searchTerms>')
-def searchAthena(searchTerms):
-    url = searchTerms
-    url = url.replace("+", " ")
-    Athena.processText(self=Athena(), text=url)
-    return render_template("index.html")
-
-#########################################################################
-
-# import other funcs
-
-
-# INITS
 listener = sr.Recognizer()
 engine = tts.init()
 voices = engine.getProperty("voices")
@@ -343,3 +301,6 @@ class Athena:
                 speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
+
+
+Athena.runAthena(self=Athena)
