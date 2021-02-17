@@ -1,3 +1,4 @@
+import pyttsx3
 import speech_recognition as sr  # module to mic input
 import pyttsx3 as tts  # text-to-speech
 import pywhatkit as pwk  # finds songs through YouTube
@@ -6,6 +7,7 @@ import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
 from translate import Translator
+import importlib
 import time
 
 urlForAtheneBigBodgeBecauseIDONTCAREABOUTTHISANDIJUSTWANTTOGETITWORKINGHONESTLY = ""
@@ -35,12 +37,12 @@ def callAthena():
     Athena.runAthena(self=Athena())
     return render_template("athena.html")
 
-@app.route('/text-input|<string:searchTerms>')
+@app.route('/text-input<string:searchTerms>')
 def searchAthena(searchTerms):
     url = searchTerms
     url = url.replace("+", " ")
     Athena.processText(self=Athena(), text=url)
-    return str(url)
+    return render_template("index.html")
 #########################################################################
 
 
@@ -73,9 +75,9 @@ root = lambda a, b: a ** (b ** -1)
 
 # BrainBogglers
 cArea = lambda a: pi * (a ** 2)  # circle Area
-cCum = lambda a: (a * 2) * pi  # circle circumferance
-ciArea = lambda a, b: ((pi * (a ** 2)) * 2) + ((a * 2) * pi)  # cilyndr area
-ciVol = lambda a, b: (pi * (a ** 2)) * b  # cilyndr volume
+cCum = lambda a: (a * 2) * pi  # circle circumference
+ciArea = lambda a, b: ((pi * (a ** 2)) * 2) + ((a * 2) * pi)  # cylinder area
+ciVol = lambda a, b: (pi * (a ** 2)) * b  # cylinder volume
 
 # GigaBogglers
 sArea = lambda a: 4 * pi * (a ** 2)
@@ -90,9 +92,12 @@ def play_sound(filePath):
     pyglet.app.run()
 
 
-def say(string):
-    engine.say(string)
-    engine.runAndWait()
+def speakPhrase(string):
+    importlib.reload(tts)
+    engine = tts.init()
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[1].id)
+    tts.speak(string)
 
 
 class Athena:
@@ -112,14 +117,11 @@ class Athena:
     def processText(self, text):
         print(text)
         text = text.lower()
-        say(text)
         text = "athena" + text
         print("woken...")
-        if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
+        if "athena" in text or "athina" in text:
             text = text.replace("athena", "")
             text = text.replace("athina", "")
-            text = text.replace("tatis", "")
-            text = text.replace("tatos", "")
 
             print(text)
 
@@ -143,67 +145,65 @@ class Athena:
                 Athena.run_calculator(self, text)
             else:
                 pass
-    # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
-    def play(self, input):  # DONE
+
+
+    def play(self, input):
         song = input.replace("play", "")
         print("playing" + song)
-        say("playing" + song)
+        speakPhrase("playing" + song)
         pwk.playonyt(song)
 
-    def time(self, input):  # DONE
+    def time(self, input):
         time = datetime.datetime.now().strftime("%I:%M %p")
         print(time)
-        say("the time is " + time)
+        speakPhrase("the time is " + time)
 
-    def define(self, input):  # DONE
+    def define(self, input):
         thing = input.replace("define", "")
         thing = thing.replace("tofind", "")
         thing = thing.replace(" ", "")
         print(thing)
         try:
             print(wikipedia.summary(thing, 1))
-            say(wikipedia.summary(thing, 1))
+            speakPhrase(wikipedia.summary(thing, 1))
         except:
-            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+            speakPhrase("sorry, we could not find " + thing + " on Wikipedia. please try again.")
 
-    def searchWikipedia(self, input):  # DONE
+    def searchWikipedia(self, input):
         thing = input.replace("search wikipedia for", "")
         thing = thing.replace("tofind", "")
         print(thing)
         try:
             print(wikipedia.summary(thing, 1))
-            say(wikipedia.summary(thing, 1))
+            speakPhrase(wikipedia.summary(thing, 1))
         except:
-            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+            speakPhrase("sorry, we could not find " + thing + " on Wikipedia. please try again.")
 
-    def whatdoes(self, input):  # DONE
+    def whatdoes(self, input):
         thing = input.replace("what does", "")
         thing = thing.replace("tofind", "")
         thing = thing.replace("mean", "")
         print(thing)
         try:
             print(wikipedia.summary(thing, 1))
-            say(wikipedia.summary(thing, 1))
+            speakPhrase(wikipedia.summary(thing, 1))
         except:
-            say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
+            speakPhrase("sorry, we could not find " + thing + " on Wikipedia. please try again.")
             pass
 
-    # elif "repeat" in command:
-    # say(command.replace("repeat", ""))
-
-    def bitesize(self, input):  # DONE
+    def bitesize(self, input):
         search = input.replace("bitesize", "")
         search = search.replace(" ", "+")
         search = search.replace("++", "")
         print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
-        say(("searching bbc bite size for %s" % search).replace("+", ""))
+        speakPhrase(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
 
     def research(self, input):
         search = input.replace("research", "")
         search = search.replace(" ", "+")
         print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
-        say(("searching bbc bite size for %s" % search).replace("+", ""))
+        speakPhrase(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
 
     def translationModule(self, input):
@@ -211,19 +211,19 @@ class Athena:
         string = string.replace("translate", "")
         string = string.replace("  ", "")
         string = string.replace(" into ", "|")
-        stringSplitted = string.split("|", 1)
-        eng = stringSplitted[0]
-        lang = stringSplitted[1]
+        stringSplit = string.split("|", 1)
+        eng = stringSplit[0]
+        lang = stringSplit[1]
 
         translator = Translator(to_lang=lang, from_lang="English")  ##Translator settings
-        say("The translation has been printed")
+        speakPhrase("The translation has been printed")
         translated = translator.translate(eng)
         print("The translation is: " + translated)
         try:
-            say(translated)
+            speakPhrase(translated)
         except:
             print("The output language is not supported in speech")
-            say("The output language is not supported in speech")
+            speakPhrase("The output language is not supported in speech")
 
     def run_calculator(self, text):
         text = text.replace("calculate", "")
@@ -235,7 +235,7 @@ class Athena:
             b = int(text[1])
             answer = add(a, b)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -246,7 +246,7 @@ class Athena:
             b = int(text[1])
             answer = minus(a, b)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -257,7 +257,7 @@ class Athena:
             b = int(text[1])
             answer = times(a, b)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -268,7 +268,7 @@ class Athena:
             b = int(text[1])
             answer = divide(a, b)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -279,7 +279,7 @@ class Athena:
             b = int(text[1])
             answer = power(a, b)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -289,7 +289,7 @@ class Athena:
             a = int(text[0])
             answer = power(a, 2)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -299,7 +299,7 @@ class Athena:
             a = int(text[0])
             answer = power(a, 3)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -317,7 +317,7 @@ class Athena:
             b = int(text[1])
             answer = root(a, b)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -327,7 +327,7 @@ class Athena:
             a = int(text[0])
             answer = root(a, 2)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
 
@@ -337,6 +337,6 @@ class Athena:
             a = int(text[0])
             answer = root(a, 3)
             try:
-                say("The answer is " + str(answer))
+                speakPhrase("The answer is " + str(answer))
             except:
                 print("The answer is", answer)

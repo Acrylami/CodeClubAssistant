@@ -7,9 +7,8 @@ import wikipedia  # opens Wikipedia pages
 import webbrowser as wb
 import pyglet  # better audio output
 from translate import Translator
-import speech_recognition as ssr
-import time
-#import other funcs
+
+# import other funcs
 
 
 # INITS
@@ -18,33 +17,33 @@ engine = tts.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[1].id)
 
+# Calculator FUNCS:
 
-#Calculator FUNCS:
-
-#All in radius
+# All in radius
 pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 
-#Basic
-add = lambda a, b : a + b
-minus = lambda a, b : a - b
-times = lambda a, b : a * b
-divide = lambda a, b : a / b
+# Basic
+add = lambda a, b: a + b
+minus = lambda a, b: a - b
+times = lambda a, b: a * b
+divide = lambda a, b: a / b
 
-#More less Basic
-power = lambda a, b : a ** b
-root = lambda a, b : a ** (b ** -1)
+# More less Basic
+power = lambda a, b: a ** b
+root = lambda a, b: a ** (b ** -1)
 
-#BrainBogglers
-cArea = lambda a :  pi * (a ** 2)                               # circle Area
-cCum = lambda a : (a * 2) * pi                                  # circle circumferance
-ciArea = lambda a, b : ((pi * (a ** 2)) * 2) + ((a * 2) * pi)   # cilyndr area
-ciVol = lambda a, b : (pi * (a ** 2)) * b                       # cilyndr volume
+# BrainBogglers
+cArea = lambda a: pi * (a ** 2)  # circle Area
+cCum = lambda a: (a * 2) * pi  # circle circumferance
+ciArea = lambda a, b: ((pi * (a ** 2)) * 2) + ((a * 2) * pi)  # cilyndr area
+ciVol = lambda a, b: (pi * (a ** 2)) * b  # cilyndr volume
 
-#GigaBogglers
-sArea = lambda a : 4 * pi * (a ** 2)
-sVol = lambda a : (4/3) * pi * (a ** 3)
+# GigaBogglers
+sArea = lambda a: 4 * pi * (a ** 2)
+sVol = lambda a: (4 / 3) * pi * (a ** 3)
 
 skipTranslation = False
+
 
 def play_sound(filePath):
     sound = pyglet.resource.media(filePath)
@@ -68,14 +67,12 @@ class Athena:
                 text = listener.recognize_google(voice, language='en-UK')
                 text = text.lower()
                 print("woken...")
-                if "athena" in text or "athina" in text or "tatis" in text or "tatos" in text:
+                if "athena" in text or "athina" in text:
                     text = text.replace("athena", "")
                     text = text.replace("athina", "")
-                    text = text.replace("tatis", "")
-                    text = text.replace("tatos", "")
 
                     print(text)
-                    
+
                     if "play" in text:
                         Athena.play(self, text)
                     elif "time" in text:
@@ -98,21 +95,19 @@ class Athena:
                         pass
         except:
             pass
-        
 
-    # FUNCS for what to happen (#DONE was for me, Eoin, to track proggress)
     def play(self, input):  # DONE
         song = input.replace("play", "")
         print("playing" + song)
         say("playing" + song)
         pwk.playonyt(song)
 
-    def time(self, input):  # DONE
+    def time(self, input):
         time = datetime.datetime.now().strftime("%I:%M %p")
         print(time)
         say("the time is " + time)
 
-    def define(self, input):  # DONE
+    def define(self, input):
         thing = input.replace("define", "")
         thing = thing.replace("tofind", "")
         thing = thing.replace(" ", "")
@@ -123,7 +118,7 @@ class Athena:
         except:
             say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
 
-    def searchWikipedia(self, input):  # DONE
+    def searchWikipedia(self, input):
         thing = input.replace("search wikipedia for", "")
         thing = thing.replace("tofind", "")
         print(thing)
@@ -133,7 +128,7 @@ class Athena:
         except:
             say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
 
-    def whatdoes(self, input):  # DONE
+    def whatdoes(self, input):
         thing = input.replace("what does", "")
         thing = thing.replace("tofind", "")
         thing = thing.replace("mean", "")
@@ -145,10 +140,7 @@ class Athena:
             say("sorry, we could not find " + thing + " on Wikipedia. please try again.")
             pass
 
-    # elif "repeat" in command:
-    # say(command.replace("repeat", ""))
-
-    def bitesize(self, input):  # DONE
+    def bitesize(self, input):
         search = input.replace("bitesize", "")
         search = search.replace(" ", "+")
         search = search.replace("++", "")
@@ -162,17 +154,17 @@ class Athena:
         print(("Searching BBC Bitesize for '%s'" % search).replace("+", ""))
         say(("searching bbc bite size for %s" % search).replace("+", ""))
         wb.open("https://www.bbc.co.uk/bitesize/search?q=%s" % search)
-    
+
     def translationModule(self, input):
         string = input
         string = string.replace("translate", "")
         string = string.replace("  ", "")
         string = string.replace(" into ", "|")
-        stringSplitted = string.split("|", 1)
-        eng = stringSplitted[0]
-        lang = stringSplitted[1]
+        stringSplit = string.split("|", 1)
+        eng = stringSplit[0]
+        lang = stringSplit[1]
 
-        translator = Translator(to_lang=lang, from_lang="English") ##Translator settings
+        translator = Translator(to_lang=lang, from_lang="English")  ##Translator settings
         say("The translation has been printed")
         translated = translator.translate(eng)
         print("The translation is: " + translated)
@@ -249,7 +241,7 @@ class Athena:
                 say("The answer is " + str(answer))
             except:
                 print("The answer is", answer)
-        
+
         elif "cubed" in text:
             text = text.replace("cubed", "")
             text = text.split()
@@ -299,6 +291,5 @@ class Athena:
                 print("The answer is", answer)
 
 
-while True: #Program Main loop. This is where all of the code is called!
-    #runAthena(self=Athena())
-    Athena.runAthena(self = Athena())
+while True:  # Program Main loop. This is where all of the code is called!
+    Athena.runAthena(self=Athena())
