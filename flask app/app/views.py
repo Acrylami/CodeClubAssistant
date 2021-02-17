@@ -41,11 +41,8 @@ def searchAthena(searchTerms):
     url = url.replace("+", " ")
     Athena.processText(self=Athena(), text=url)
     return render_template("index.html")
+
 #########################################################################
-
-
-# Fixed bugs almost
-
 
 # import other funcs
 
@@ -101,6 +98,7 @@ def speakPhrase(string):
 class Athena:
     def runAthena(self):
         try:
+
             if not sr.Microphone:
                 print("Cannot access microphone. See requirements.txt to install PyAudio.")
             with sr.Microphone() as source:
@@ -213,7 +211,6 @@ class Athena:
         lang = stringSplit[1]
 
         translator = Translator(to_lang=lang, from_lang="English")  ##Translator settings
-        speakPhrase("The translation has been printed")
         translated = translator.translate(eng)
         print("The translation is: " + translated)
         try:
@@ -226,7 +223,7 @@ class Athena:
         text = text.replace("calculate", "")
         text = text.replace("what's", "")
         if "+" in text:
-            text = text.replace("+", "")
+            text = text.replace("+", " ")
             text = text.split()
             a = int(text[0])
             b = int(text[1])
