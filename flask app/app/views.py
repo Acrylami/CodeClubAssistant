@@ -222,6 +222,11 @@ class Athena:
     def run_calculator(self, text):
         text = text.replace("calculate", "")
         text = text.replace("what's", "")
+        text = text.replace("add", "+")
+        text = text.replace("minus", "-")
+        text = text.replace("divide", "/")
+        text = text.replace("times", "x")
+        text = text.replace("to the power of", "^")
         if "+" in text:
             text = text.replace("+", " ")
             text = text.split()
