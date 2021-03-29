@@ -4,8 +4,29 @@
 {% block title %}Athena{% endblock %}
 {% block body %}
 <div class="jumbotron">
+  <img src="{{url_for('static', filename='navlogo.png')}}" alt="Nav Logo Image">
   <h1>Welcome to Athena</h1>
+  <br>
   <p class="lead">Welcome to Athena, the virtual assistant.</p>
-  <p class="lead">Click the option in the top right to talk to Athena.</p>
+  <p class="lead">Pressing the microphone icon will allow you to talk to Athena...</p>
+  <br>
+  <form action="callAthena">
+    <input type="image" src="{{url_for('static', filename='newMic.png')}}" style="width:15%; height:automatic" alt="Microphone Image"> 
+  </form>
+  <p><br>... alternatively, write a command into the search box </p>
+
+  <input type="text" name="search" size="31" maxlength="255" value="" id="search">
+    <script type="text/javascript">
+      function athenaByTextFunction(){
+        var searchBarValue = document.getElementById("search").value;
+        var replaced = searchBarValue.split(' ').join('+');
+        searchBarValue = '/text-input' + replaced;
+        console.log(searchBarValue);
+        javascript:window.location.href=searchBarValue;}
+    </script>
+
+    <button onclick="athenaByTextFunction()" class="button">Enter</button>
+    <h5>Enter a command (to view commands, click <a href="http://127.0.0.1:5000/about">here</a>)</h5>
+  </div>
 </div>
 {% endblock %}

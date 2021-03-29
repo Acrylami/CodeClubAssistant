@@ -4,10 +4,20 @@
 {% block title %}Talk to Athena{% endblock %}
 {% block body %}
 <div class="jumbotron">
+  <img src="{{url_for('static', filename='navlogo.png')}}" alt="Nav Logo Image">
   <h1>Talk to Athena</h1>
   <p class="lead">On this page, you can talk to Athena.</p>
-  <form action="startAthenaInBrowser">
-    <button type="submit">PUSH TO TALK</button>
-    </form>
+  <form action="callAthena">
+    <input type="image" src="{{url_for('static', filename='newMic.png')}}" style="width:20%; height:automatic" alt="Microphone Image">
+  </form>
+  <form action="http://127.0.0.1:5000/">
+    <button type="submit>" class="button">Back Home</button>
+  </form>
 </div>
 {% endblock %}
+
+  <!--<script lang="python">
+    function oofFunction() {
+      document.getElementById("oof").innerHTML="Thats better, isn't it?";
+    }
+  </script> -->

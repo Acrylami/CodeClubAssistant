@@ -4,7 +4,16 @@
 {% block title %}About{% endblock %}
 {% block body %}
 <div class="jumbotron">
-  <h1>The About Page</h1>
-  <p class="lead">You can learn more about my website here.</p>
+  <img src="{{url_for('static', filename='navlogo.png')}}" alt="Nav Logo Image">
+  <h1>The Commands Page</h1>
+  <p class="lead"><b>Athena...</b>
+    <br>Play<br>
+    Define<br>
+    What's the time<br>
+    <a href="http://127.0.0.1:5000/calculator">>Calculate</a><br>
+    Translate<br>
+    Bitesize<br>
+    Define<br>
+    </b>
 </div>
 {% endblock %}

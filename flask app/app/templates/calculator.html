@@ -1,0 +1,19 @@
+<!-- about.html-->
+
+{% extends "base.html" %}
+{% block title %}Calculate Function{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  <img src="{{url_for('static', filename='navlogo.png')}}" alt="Nav Logo Image">
+  <h1>The Calculator Page</h1>
+  <p class="lead"><b>Calculate [number] ... [number]</b>
+    <br>Add<br>
+    Minus<br>
+    Divided by<br>
+    Times<br>
+    To the power of<br></b>
+	
+  <p class="lead"><b>Calculate [number] ...</b>
+    <br>Squared<br></b>
+</div>
+{% endblock %}

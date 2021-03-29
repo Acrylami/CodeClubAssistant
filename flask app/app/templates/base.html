@@ -4,6 +4,35 @@
 <html lang="en">
   <head>
     <title>{% block title %}{% endblock %}</title>
+      <style>
+        /* To center any media */
+        div.center {
+          text-align: center;
+        }
+        
+        .button {
+          background-color: #05A7FF; /* Athena Blue */
+          border: none;
+          color: black;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+      </style>
+
+      <script type="text/javascript">
+        function dosearch() {
+        var sf=document.searchform;
+        var submitto = sf.sengines.options[sf.sengines.selectedIndex].value + escape(sf.searchterms.value);
+        window.location.href = submitto;
+        return false;
+        }
+      </script>
+      
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -11,20 +40,17 @@
   </head>
   <body>
     <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="/">Home</a></li>
-            <li role="presentation"><a href="/about">About</a></li>
-            <li role="presentation"><a href="/athena" target="_blank">Talk to Athena</a></li
-          </ul>
-        </nav>
+      <div class="center">
+        <div class="header clearfix">
+          <nav>
+            <!--If you really want buttons or a top bar-->
+          </nav>
+        </div>
+        {% block body %}
+        {% endblock %}
+        <footer class="footer">
+        </footer>
       </div>
-      {% block body %}
-      {% endblock %}
-      <footer class="footer">
-        <p>© Athena</p>
-      </footer>
     </div> <!-- /container -->
   </body>
 </html>
