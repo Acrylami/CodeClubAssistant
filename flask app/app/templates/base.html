@@ -4,6 +4,103 @@
 <html lang="en">
   <head>
     <title>{% block title %}{% endblock %}</title>
+      <style>
+        /* To center any media */
+        div.center {
+          text-align: center;
+        }
+        
+        /* ---SEARCH BAR STYLE--- */
+        /* Add a black background color to the top navigation bar */
+        .searchBar {
+          overflow: hidden;
+          background-color: #00A5FF;
+        }
+
+        /* Style the search box inside the navigation bar */
+        .searchBar input[type=text] {
+          float: center;
+          padding: 12px;
+          border: none;
+          margin-top: 16px;
+          margin-right: 16px;
+          font-size: 17px;
+        }
+
+        /* Structure the search bar */
+        .searchBar input[type=text] {
+          float: none;
+          display: block;
+          text-align: left;
+          width: 100%;
+          margin: 0;
+          padding: 14px;
+        }
+
+        .searchBar input[type=text] {
+          border: 1px solid #337599;
+        }
+
+
+        /* ---DROPDOWN STYLE---*/
+        /* Dropdown Button */
+        .dropbtn {
+          background-color: white;
+          color: white;
+          padding: 8px;
+          font-size: 12;
+          border: none;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+          background-color: #ddd;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {
+          background-color: #3e8e41;
+        }
+      </style>
+
+      <script type="text/javascript">
+        function dosearch() {
+        var sf=document.searchform;
+        var submitto = sf.sengines.options[sf.sengines.selectedIndex].value + escape(sf.searchterms.value);
+        window.location.href = submitto;
+        return false;
+        }
+      </script>
+      
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -11,20 +108,18 @@
   </head>
   <body>
     <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="/">Home</a></li>
-            <li role="presentation"><a href="/about">About</a></li>
-            <li role="presentation"><a href="/athena" target="_blank">Talk to Athena</a></li
-          </ul>
-        </nav>
+      <div class="center">
+        <div class="header clearfix">
+          <nav>
+            <!--If you really want buttons or a top bar-->
+          </nav>
+        </div>
+        {% block body %}
+        {% endblock %}
+        <footer class="footer">
+          <p>© Athena</p>
+        </footer>
       </div>
-      {% block body %}
-      {% endblock %}
-      <footer class="footer">
-        <p>© Athena</p>
-      </footer>
     </div> <!-- /container -->
   </body>
 </html>
